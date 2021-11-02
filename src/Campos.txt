@@ -1,0 +1,47 @@
+https://developers.google.com/fonts/docs/material_icons
+
+
+"Client - Create":
+  "cpf"
+  "name"
+  "username"
+  "password"
+  "email"
+  "suitability"
+  "cel"
+  "address"
+  "city": 
+  "state":
+  "status"
+  "complement"
+  "zip_code"
+  "obs"
+
+"Client - Update":
+  "cpf"
+  "name"
+  "username"
+
+"Advisor - Create":
+  cpf    
+  name    
+  username    
+  password    
+  email    
+  cel  
+  address    
+  city  
+  state    
+  status   
+  complement    
+  zip_code    
+  obs    
+  birth   
+  salary    
+  work_code
+  cvm_code
+
+"Advisor - Update":
+  name    
+  salary
+					
