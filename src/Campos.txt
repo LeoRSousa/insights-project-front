@@ -2,20 +2,20 @@ https://developers.google.com/fonts/docs/material_icons
 
 
 "Client - Create":
-  "cpf"
-  "name"
+  "cpf" V
+  "name" V
   "username"
-  "password"
-  "email"
-  "suitability"
-  "cel"
-  "address"
-  "city": 
-  "state":
-  "status"
-  "complement"
-  "zip_code"
-  "obs"
+  "password" V
+  "email" V
+  "suitability" V
+  "cel" V
+  "address" V
+  "city": V
+  "state": V
+  "status" V
+  "complement" V
+  "zip_code" V
+  "obs" V
 
 "Client - Update":
   "cpf"
