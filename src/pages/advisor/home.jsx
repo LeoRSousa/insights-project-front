@@ -1,8 +1,8 @@
 import React from "react";
 import "./home.css";
 import { Row, Col, Button } from "reactstrap";
-import { BsFillPersonPlusFill, BsPersonFill, BsFillTrashFill, BsPencilFill } from "react-icons/bs";
-import ClientCard from "../client/getClients";
+import { BsFillPersonPlusFill, BsFillPersonFill, BsBoxArrowInLeft, BsPersonLinesFill } from "react-icons/bs";
+import ClientCard from "../../components/getClients";
 
 export default class AdvisorHome extends React.Component {
     constructor(props) {
@@ -28,7 +28,8 @@ export default class AdvisorHome extends React.Component {
                     {/* Retangle-3 = Card do perfil */}
                     <div className="Rectangle-3">
                         <br />
-                        <div className="Ellipse-1">
+                        <div className="Ellipse-1"><br />
+                            <BsFillPersonFill size={40} />
                         </div>
                         <p className="Txt-1">
                             Nome <br />
@@ -41,38 +42,41 @@ export default class AdvisorHome extends React.Component {
                     <Row>
                         <Col xs="1"></Col>
                         <Col>
-                            <a href="">
+                            <a href="../client/create">
                                 <div className="side-bar"><BsFillPersonPlusFill size={40} />
                                     &nbsp;&nbsp;&nbsp;Adicionar cliente</div>
                             </a>
                         </Col>
                     </Row>
                     <hr />
+                    <Row>
+                        <Col xs="1"></Col>
+                        <Col>
+                            <a href="./update">
+                                <div className="side-bar"><BsPersonLinesFill size={40} />
+                                    &nbsp;&nbsp;&nbsp;Editar perfil</div>
+                            </a>
+                        </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <Col xs="1"></Col>
+                        <Col>
+                            <a href="../">
+                                <div className="side-bar"><BsBoxArrowInLeft size={40} />
+                                    &nbsp;&nbsp;&nbsp;Logout</div>
+                            </a>
+                        </Col>
+                    </Row>
+                    <hr />
                 </div>
+
                 <div className="Rectangle-1">
                     <br />
                     <br />
                     <h1>CLIENTES</h1>
                     <br />
                     <ClientCard />
-                    
-                    {/* <Row className="card">
-                        {/* <br /> */}
-                        {/* <Col>
-                            <BsPersonFill size={40} />
-                            &nbsp;&nbsp;&nbsp;Infos&nbsp;&nbsp;
-                            <BsFillTrashFill size={25} />
-                            &nbsp;&nbsp;
-                            <BsPencilFill size={25} />
-                        </Col> 
-                        <a href="">
-                            <div className="space-between">
-                                <div> <BsPersonFill size={40} /> </div>
-                                <div> <b>NOME DO CLIENTE</b> <br /> info adicional  </div>
-                                <div> <Button><BsFillTrashFill size={25} onClick={this.deleteClient} /></Button>  &nbsp;&nbsp;  <Button><BsPencilFill size={25} onClick={this.editClient} /></Button> </div>
-                            </div>
-                        </a>
-                    </Row> */}
                 </div>
             </>
         );

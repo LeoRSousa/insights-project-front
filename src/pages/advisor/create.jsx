@@ -1,13 +1,13 @@
 import React from 'react';
-import './create.css';
-import axios from "axios";
+import '../client/create.css'
 
-import account_circle from "../../assets/ic_account_circle_white_48dp.png";
+import account_circle from "../../assets/ic_account_circle_white_48dp.png"
+import logo from "../../assets/3.png";
 
 import { Form, FormGroup, Label, Col, Input, Button, Row } from 'reactstrap';
-import { BsFillPersonPlusFill, BsFillPersonFill, BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
+import { BsFillPersonPlusFill, BsFillPersonFill, BsFillHouseFill, BsBoxArrowInRight } from "react-icons/bs";
 
-class CreateClient extends React.Component {
+class CreateAdvisor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,20 +16,20 @@ class CreateClient extends React.Component {
             username: '',
             email: '',
             password: '',
-            suitability: '',
             cel: '',
             address: '',
             city: '',
             estate: '',
-            status: 1,
             complement: '',
             zip_code: '',
             obs: '',
-            resultado: ''
+            birth: '',
+            salary: 12341.42,
+            work_code: 412561,
+            cvm_code: ''
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.req = this.req.bind(this);
     }
 
     handleInputChange(event) {
@@ -43,25 +43,6 @@ class CreateClient extends React.Component {
 
     }
 
-    async req() {
-        var data = JSON.stringify(this.state.resultado);
-        var config = {
-            method: 'post',
-            url: 'localhost:5000/client/create',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: data
-        };
-        axios(config)
-            .then(function (response) {
-                alert(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-                alert(error);
-            });
-    }
-
     handleSubmit(event) {
         const result = `
             "name": "${this.state.name}"
@@ -69,20 +50,20 @@ class CreateClient extends React.Component {
             "username": "${this.state.username}"
             "email": "${this.state.email}"
             "password": "${this.state.password}"
-            "suitability": "${this.state.suitability}"
             "cel": "${this.state.cel}"
             "address": "${this.state.address}"
             "city": "${this.state.city}"
             "estate": "${this.state.estate}"
-            "status": 1
             "complement": "${this.state.complement}"
             "zip_code": "${this.state.zip_code}"
             "obs": "${this.state.obs}"
+            "birth": "${this.state.birth}"
+            "salary": ${this.state.salary}
+            "work_code": ${this.state.work_code}
+            "cvm_code": "${this.state.cvm_code}"
         `;
-        this.state.resultado = result;
-        this.req();
-        // JSON.stringify(result);
-        // alert(`JSON: ${result}`);
+
+        alert(`JSON: ${result}`);
         event.preventDefault();
     }
 
@@ -92,8 +73,9 @@ class CreateClient extends React.Component {
                 {/* Retangle-2 = Sidebar */}
                 <div className="Rectangle-2">
                     {/* Retangle-3 = Card do perfil */}
-                    <div className="Rectangle-3">
-                        <br />
+                    <img src={logo} alt="Logo" width={300} />
+                    {/* <div className="Rectangle-3"> */}
+                        {/* <br />
                         <div className="Ellipse-1"><br />
                             <BsFillPersonFill size={40} />
                         </div>
@@ -102,25 +84,16 @@ class CreateClient extends React.Component {
                             Email <br />
                             Cidade - Es <br />
                             CVN
-                        </p>
-                    </div>
-                    <hr />
-                    <Row>
-                        <Col xs="1"></Col>
-                        <Col>
-                            <a href="../advisor/home">
-                                <div className="side-bar"><BsFillHouseFill size={40} />
-                                    &nbsp;&nbsp;&nbsp;Página Inicial</div>
-                            </a>
-                        </Col>
-                    </Row>
+                        </p> */}
+
+                    {/* </div> */}
                     <hr />
                     <Row>
                         <Col xs="1"></Col>
                         <Col>
                             <a href="../">
-                                <div className="side-bar"><BsBoxArrowInLeft size={40} />
-                                    &nbsp;&nbsp;&nbsp;Logout</div>
+                                <div className="side-bar"><BsBoxArrowInRight size={40} />
+                                    &nbsp;&nbsp;&nbsp;Login</div>
                             </a>
                         </Col>
                     </Row>
@@ -130,7 +103,7 @@ class CreateClient extends React.Component {
                 <div className="Rectangle-1">
                     <div className='title'>
                         <img src={account_circle} alt="Profile Icon" />
-                        <h1>Criar cliente</h1>
+                        <h1>Criar usuário</h1>
                     </div>
                     <div className='main-form'>
                         <Form onSubmit={this.handleSubmit.bind(this)}>
@@ -214,23 +187,6 @@ class CreateClient extends React.Component {
                                         id="password"
                                         name="password"
                                         type="password"
-                                        onChange={this.handleInputChange.bind(this)}
-                                    />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label
-                                    for="suitability"
-                                    sm={2}
-                                >
-                                    Suitability
-                                </Label>
-                                <Col sm={10}>
-                                    <Input
-                                        id="suitability"
-                                        name="suitability"
-                                        placeholder="suitability"
-                                        type="text"
                                         onChange={this.handleInputChange.bind(this)}
                                     />
                                 </Col>
@@ -371,10 +327,78 @@ class CreateClient extends React.Component {
                                     />
                                 </Col>
                             </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="birth"
+                                    sm={2}
+                                >
+                                    Nascimento
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="birth"
+                                        name="birth"
+                                        placeholder="01/01/2001"
+                                        type="date"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="salary"
+                                    sm={2}
+                                >
+                                    Salário
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="salary"
+                                        name="salary"
+                                        placeholder="1234.56"
+                                        type="number"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="work_code"
+                                    sm={2}
+                                >
+                                    Cód. de trab.
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="work_code"
+                                        name="work_code"
+                                        placeholder="0000"
+                                        type="number"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="cvm_code"
+                                    sm={2}
+                                >
+                                    Cód. CVM
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="cvm_code"
+                                        name="cvm_code"
+                                        placeholder="000"
+                                        type="text"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
 
                             <div className="cb">
                                 <Button secondary>
-                                    Enviar
+                                    Cadastrar
                                 </Button>
                             </div>
 
@@ -386,4 +410,4 @@ class CreateClient extends React.Component {
     };
 }
 
-export default CreateClient;
+export default CreateAdvisor;

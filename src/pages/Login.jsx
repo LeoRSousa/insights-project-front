@@ -27,6 +27,10 @@ class Login extends React.Component {
 
   }
 
+  cadastro(event) {
+    console.log('./advisor/create');
+  }
+
   handleSubmit(event) {
     const result = `"email": "${this.state.email}", "password": "${this.state.password}"`;
 
@@ -86,9 +90,11 @@ class Login extends React.Component {
                 Entrar
               </Button>
               {' '}
-              <Button>
-                Cadastrar
-              </Button>
+              <a href="./advisor/create">
+                <Button type="button" onClick={this.cadastro()}>
+                  Cadastrar
+                </Button>
+              </a>
             </Form>
           </Col>
         </Row>

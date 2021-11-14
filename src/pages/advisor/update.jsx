@@ -1,51 +1,20 @@
-import React, { useState, useEffect } from "react";
-import './create.css';
+import React from 'react';
 
 import account_circle from "../../assets/ic_account_circle_white_48dp.png";
 
-import { Form, FormGroup, Label, Col, Input, Row } from 'reactstrap';
+import { Form, FormGroup, Label, Col, Input, Button, Row } from 'reactstrap';
 import { BsFillPersonPlusFill, BsFillPersonFill, BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
 
-class UpdateClient extends React.Component {
+class UpdateAdvisor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
-            cpf: '',
-            username: ''
+            salary: 12341.42
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
     }
-
-    // useEffect(() => {
-    // }, []);
-
-    // componentDidMount() {
-    //     const [res, setRes] = useState([]);
-
-    //     const req = async () => { 
-    //         const { data } = await axios.get("http://localhost:5000/clients");
-    //         setRes(data);
-    //     };
-
-    //     req();
-
-    // var config = {
-    //     method: 'get',
-    //     url: 'http://localhost:5000/clients',
-    //     headers: {}
-    // };
-
-    // axios(config)
-    //     .then(function (response) {
-    //         console.log(JSON.stringify(response.data));
-    //     })
-    //     .catch(function (error) {
-    //         console.log(JSON.stringify(error));
-    //     });
-    // }
-    // }
 
     handleInputChange(event) {
         const target = event.target;
@@ -59,7 +28,10 @@ class UpdateClient extends React.Component {
     }
 
     handleSubmit(event) {
-        const result = `"name": "${this.state.name}", "cpf": "${this.state.cpf}", "user": "${this.state.username}"`;
+        const result = `
+            "name": "${this.state.name}"
+            "salary": ${this.state.salary}
+        `;
 
         alert(`JSON: ${result}`);
         event.preventDefault();
@@ -68,6 +40,7 @@ class UpdateClient extends React.Component {
     render() {
         return (
             <>
+                {/* Retangle-2 = Sidebar */}
                 <div className="Rectangle-2">
                     {/* Retangle-3 = Card do perfil */}
                     <div className="Rectangle-3">
@@ -108,7 +81,7 @@ class UpdateClient extends React.Component {
                 <div className="Rectangle-1">
                     <div className='title'>
                         <img src={account_circle} alt="Profile Icon" />
-                        <h1>Editar cliente</h1>
+                        <h1>Editar perfil</h1>
                     </div>
                     <div className='main-form'>
                         <Form onSubmit={this.handleSubmit.bind(this)}>
@@ -131,55 +104,34 @@ class UpdateClient extends React.Component {
                             </FormGroup>
                             <FormGroup row>
                                 <Label
-                                    for="cpf"
+                                    for="salary"
                                     sm={2}
                                 >
-                                    CPF
+                                    Salário
                                 </Label>
                                 <Col sm={10}>
                                     <Input
-                                        id="cpf"
-                                        name="cpf"
-                                        placeholder="000.000.000-00"
+                                        id="salary"
+                                        name="salary"
+                                        placeholder="1234.56"
                                         type="text"
                                         onChange={this.handleInputChange.bind(this)}
                                     />
                                 </Col>
                             </FormGroup>
-                            <FormGroup row>
-                                <Label
-                                    for="username"
-                                    sm={2}
-                                >
-                                    Usuário
-                                </Label>
-                                <Col sm={10}>
-                                    <Input
-                                        id="username"
-                                        name="username"
-                                        placeholder="Nome de usuário"
-                                        type="text"
-                                        onChange={this.handleInputChange.bind(this)}
-                                    />
-                                </Col>
-                            </FormGroup>
-                            <div className="cb">
-                                {/* <Button secondary>
-                                Enviar
-                            </Button> */}
 
-                                <input type="submit" value="Enviar" />
+                            <div className="cb">
+                                <Button secondary>
+                                    Enviar
+                                </Button>
                             </div>
 
                         </Form>
                     </div>
-
                 </div>
-                {/* <p>{res}</p> */}
-
             </>
         );
-    }
+    };
 }
 
-export default UpdateClient;
+export default UpdateAdvisor;
