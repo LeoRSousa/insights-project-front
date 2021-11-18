@@ -45,3 +45,19 @@ https://developers.google.com/fonts/docs/material_icons
   name    
   salary
 					
+
+
+"name": "Teste 2",
+"cpf": "4512121245",
+"username": "teste2",
+"email": "teste2@gmail.com",
+"password": "1234",
+"suitability": "a",
+"cel": "54656565",
+"address": "a, 2",
+"city": "A",
+"state": "AA",
+"status": 1,
+"complement": "a",
+"zip_code": "53456454",
+"obs": "asda"

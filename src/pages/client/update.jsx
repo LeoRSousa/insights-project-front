@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import './create.css';
 
 import account_circle from "../../assets/ic_account_circle_white_48dp.png";
 
 import { Form, FormGroup, Label, Col, Input, Row } from 'reactstrap';
 import { BsFillPersonPlusFill, BsFillPersonFill, BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
+import axios from "axios";
+import { withRouter } from 'react-router-dom';
 
 class UpdateClient extends React.Component {
     constructor(props) {
@@ -12,40 +14,29 @@ class UpdateClient extends React.Component {
         this.state = {
             name: '',
             cpf: '',
-            username: ''
+            username: '',
+            id: this.props.location.state.id,
+            adv: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    // useEffect(() => {
-    // }, []);
-
-    // componentDidMount() {
-    //     const [res, setRes] = useState([]);
-
-    //     const req = async () => { 
-    //         const { data } = await axios.get("http://localhost:5000/clients");
-    //         setRes(data);
-    //     };
-
-    //     req();
-
-    // var config = {
-    //     method: 'get',
-    //     url: 'http://localhost:5000/clients',
-    //     headers: {}
-    // };
-
-    // axios(config)
-    //     .then(function (response) {
-    //         console.log(JSON.stringify(response.data));
-    //     })
-    //     .catch(function (error) {
-    //         console.log(JSON.stringify(error));
-    //     });
-    // }
-    // }
+    componentDidMount() {
+        var self = this;
+        var config = {
+            method: 'get',
+            url: 'http://localhost:5002/advisor/1',
+            headers: {}
+        };
+        axios(config)
+            .then(function (response) {
+                self.setState({ adv: response.data })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
     handleInputChange(event) {
         const target = event.target;
@@ -59,13 +50,27 @@ class UpdateClient extends React.Component {
     }
 
     handleSubmit(event) {
-        const result = `"name": "${this.state.name}", "cpf": "${this.state.cpf}", "user": "${this.state.username}"`;
-
-        alert(`JSON: ${result}`);
+        // const result = `{"name": "${this.state.name}", "cpf": "${this.state.cpf}", "user": "${this.state.username}"}`;
+        const result = { "name": this.state.name, "cpf": this.state.cpf, "username": this.state.username };
+        var _data = JSON.stringify(result);
+        // alert(`JSON: ${data}`);
+        var config = {
+            method: 'post',
+            url: 'http://localhost:5001/client/update/' + this.state.id,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: _data
+        };
+        axios(config)
+            .then(function (res) { alert('Usuário atualizado!'); window.location.replace('http://localhost:5500/advisor/home'); })
+            .catch(function (error) { alert(error); });
         event.preventDefault();
     }
 
     render() {
+        // console.log(this.props);
+        // console.log("ID: " + this.props.location.state.id);
         return (
             <>
                 <div className="Rectangle-2">
@@ -76,10 +81,10 @@ class UpdateClient extends React.Component {
                             <BsFillPersonFill size={40} />
                         </div>
                         <p className="Txt-1">
-                            Nome <br />
-                            Email <br />
-                            Cidade - Es <br />
-                            CVN
+                            {this.state.adv.name} <br />
+                            {this.state.adv.email} <br />
+                            {this.state.adv.city} - {this.state.adv.state} <br />
+                            {this.state.adv.cvm_code}
                         </p>
                     </div>
                     <hr />
@@ -182,4 +187,4 @@ class UpdateClient extends React.Component {
     }
 }
 
-export default UpdateClient;
+export default withRouter(UpdateClient);

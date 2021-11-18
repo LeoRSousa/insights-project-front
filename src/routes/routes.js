@@ -7,6 +7,7 @@ import CreateClient from "../pages/client/create";
 import UpdateClient from "../pages/client/update";
 import CreateAdvisor from "../pages/advisor/create";
 import UpdateAdvisor from "../pages/advisor/update";
+import AssetsHome from "../pages/Assets/home";
 
 const Routes = () => {
     return (
@@ -17,6 +18,7 @@ const Routes = () => {
             < Route component={CreateClient} path="/client/create" exact />
             < Route component={UpdateClient} path="/client/update" exact />
             < Route component={UpdateAdvisor} path="/advisor/update" />
+            < Route component={AssetsHome} path="/assets/home" />
         </BrowserRouter>
     )
 }

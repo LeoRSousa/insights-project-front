@@ -4,17 +4,37 @@ import account_circle from "../../assets/ic_account_circle_white_48dp.png";
 
 import { Form, FormGroup, Label, Col, Input, Button, Row } from 'reactstrap';
 import { BsFillPersonPlusFill, BsFillPersonFill, BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
+import axios from "axios";
 
 class UpdateAdvisor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
-            salary: 12341.42
+            salary: 12341.42,
+            adv: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        // this.componentDidMount = this.componentDidMount.bind(this);
     }
+
+    componentDidMount() {
+        var self = this;
+        var config = {
+            method: 'get',
+            url: 'http://localhost:5002/advisor/1',
+            headers: {}
+        };
+        axios(config)
+            .then(function (response) {
+                self.setState({adv: response.data})
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        // this.state.name = JSON.stringify(res.name);
+    };
 
     handleInputChange(event) {
         const target = event.target;
@@ -28,16 +48,33 @@ class UpdateAdvisor extends React.Component {
     }
 
     handleSubmit(event) {
-        const result = `
-            "name": "${this.state.name}"
-            "salary": ${this.state.salary}
-        `;
-
-        alert(`JSON: ${result}`);
+        const result = JSON.stringify({
+            "name": this.state.name,
+            "salary": this.state.salary
+        });
+        var config = {
+            method: 'post',
+            url: 'http://localhost:5002/advisor/update/1',//Tocar o user depois para uma var
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: result
+        };
+        axios(config)
+            .then(function (response) {
+                alert('Edição realizada!');
+                window.location.replace('http://localhost:5500/advisor/home');
+            })
+            .catch(function (error) {
+                alert(error);
+            });
+        // alert(`JSON: ${result}`);
         event.preventDefault();
     }
 
     render() {
+        // const { advisorName } = this.state.advName;
+        console.log(this.state.adv);
         return (
             <>
                 {/* Retangle-2 = Sidebar */}
@@ -49,10 +86,10 @@ class UpdateAdvisor extends React.Component {
                             <BsFillPersonFill size={40} />
                         </div>
                         <p className="Txt-1">
-                            Nome <br />
-                            Email <br />
-                            Cidade - Es <br />
-                            CVN
+                            {this.state.adv.name} <br />
+                            {this.state.adv.email} <br />
+                            {this.state.adv.city} - {this.state.adv.state} <br />
+                            {this.state.adv.cvm_code}
                         </p>
                     </div>
                     <hr />

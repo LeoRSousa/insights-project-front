@@ -6,6 +6,7 @@ import logo from "../../assets/3.png";
 
 import { Form, FormGroup, Label, Col, Input, Button, Row } from 'reactstrap';
 import { BsFillPersonPlusFill, BsFillPersonFill, BsFillHouseFill, BsBoxArrowInRight } from "react-icons/bs";
+import axios from "axios";
 
 class CreateAdvisor extends React.Component {
     constructor(props) {
@@ -44,26 +45,43 @@ class CreateAdvisor extends React.Component {
     }
 
     handleSubmit(event) {
-        const result = `
-            "name": "${this.state.name}"
-            "cpf": "${this.state.cpf}"
-            "username": "${this.state.username}"
-            "email": "${this.state.email}"
-            "password": "${this.state.password}"
-            "cel": "${this.state.cel}"
-            "address": "${this.state.address}"
-            "city": "${this.state.city}"
-            "estate": "${this.state.estate}"
-            "complement": "${this.state.complement}"
-            "zip_code": "${this.state.zip_code}"
-            "obs": "${this.state.obs}"
-            "birth": "${this.state.birth}"
-            "salary": ${this.state.salary}
-            "work_code": ${this.state.work_code}
-            "cvm_code": "${this.state.cvm_code}"
-        `;
+        const result = JSON.stringify({
+            "name": this.state.name,
+            "cpf": this.state.cpf,
+            "username": this.state.username,
+            "email": this.state.email,
+            "password": this.state.password,
+            "cel": this.state.cel,
+            "address": this.state.address,
+            "city": this.state.city,
+            "estate": this.state.estate,
+            "status": 1,
+            "complement": this.state.complement,
+            "zip_code": this.state.zip_code,
+            "obs": this.state.obs,
+            "birth": this.state.birth,
+            "salary": this.state.salar,
+            "work_code": this.state.work_cod,
+            "cvm_code": this.state.cvm_code
+        });
 
-        alert(`JSON: ${result}`);
+        var config = {
+            method: 'post',
+            url: 'http://localhost:5002/advisor/create',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: result
+        };
+        axios(config)
+            .then(function (response) {
+                alert('Advisor criado!');
+                window.location.replace('http://localhost:5500/');
+            })
+            .catch(function (error) {
+                alert(error);
+            });
+        // alert(`JSON: ${result}`);
         event.preventDefault();
     }
 
@@ -75,7 +93,7 @@ class CreateAdvisor extends React.Component {
                     {/* Retangle-3 = Card do perfil */}
                     <img src={logo} alt="Logo" width={300} />
                     {/* <div className="Rectangle-3"> */}
-                        {/* <br />
+                    {/* <br />
                         <div className="Ellipse-1"><br />
                             <BsFillPersonFill size={40} />
                         </div>

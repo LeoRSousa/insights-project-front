@@ -3,14 +3,34 @@ import "./home.css";
 import { Row, Col, Button } from "reactstrap";
 import { BsFillPersonPlusFill, BsFillPersonFill, BsBoxArrowInLeft, BsPersonLinesFill } from "react-icons/bs";
 import ClientCard from "../../components/getClients";
+import axios from "axios";
 
 export default class AdvisorHome extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            adv: '',
+        };
 
         this.editClient = this.editClient.bind(this);
         this.deleteClient = this.deleteClient.bind(this);
     }
+
+    componentDidMount() {
+        var self = this;
+        var config = {
+            method: 'get',
+            url: 'http://localhost:5002/advisor/1',
+            headers: {}
+        };
+        axios(config)
+            .then(function (response) {
+                self.setState({ adv: response.data })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
 
     editClient(event) {
         alert('Edit');
@@ -32,10 +52,10 @@ export default class AdvisorHome extends React.Component {
                             <BsFillPersonFill size={40} />
                         </div>
                         <p className="Txt-1">
-                            Nome <br />
-                            Email <br />
-                            Cidade - Es <br />
-                            CVN
+                            {this.state.adv.name} <br />
+                            {this.state.adv.email} <br />
+                            {this.state.adv.city} - {this.state.adv.state} <br />
+                            {this.state.adv.cvm_code}
                         </p>
                     </div>
                     <hr />
