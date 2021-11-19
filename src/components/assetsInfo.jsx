@@ -2,20 +2,15 @@ import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 import StockChart from "./stockChart";
+import LineChart from "./line"
 
 const AssetsInfo = ({ company }) => {
     const [historic, setHistoric] = useState([]);
     const [business, setBusiness] = useState([]);
-    const [data, setData] = useState({});
+    const [values, setValues] = useState([]);
+    const [datetimes, setDatetimes] = useState([]);
 
     function handleData() {
-        let values = [];
-        let datetimes = [];
-        historic.map((e) => {
-            values.push(e.close.toPrecision(4));
-            datetimes.push(e.date);
-        });
-        console.log(datetimes);
         // setData({
         //     stockFullName: business.longName,
         //     stockShortName: company[0],
@@ -33,7 +28,29 @@ const AssetsInfo = ({ company }) => {
         //         data: values,
         //     },
         // });
-        
+
+    }
+
+    function handleRes(data) {
+        console.log("Info:" + data[0].info.longName);
+        setHistoric(data[0].historic);
+        setBusiness(data[0].info.longName);
+        console.log("Hs.: " + historic[0]);
+        console.log("-----------------------------------------------------------------");
+        historic.map((e) => {
+            setValues(oldValues => [...oldValues, e.close.toFixed(2)]);
+            // setDatetimes(oldDt => [...oldDt, e.date]);
+        });
+        historic.map((e) => {
+            // setValues(oldValues => [...oldValues, e.close.toFixed(2)]);
+            setDatetimes(oldDt => [...oldDt, e.date]);
+        });
+        console.log("Date Type " + typeof(historic[0].date));
+        console.log("Close Type " + typeof(historic[0].close));
+        console.log("VAL.: " + values + Array.isArray(values));
+        console.log("-----------------------------------------------------------------");
+        console.log("Dt.: " + datetimes);
+        console.log("-----------------------------------------------------------------");
     }
 
     useEffect(() => {
@@ -53,20 +70,13 @@ const AssetsInfo = ({ company }) => {
             };
 
             axios(config)
-                .then(function (response) {
-                    console.log("Info:" + response.data[0].info.longName);
-                    setHistoric(response.data[0].historic);
-                    setBusiness(response.data[0].info.longName);
-                    // console.log(response.data[0].historic);
-                })
+                .then((response) => handleRes(response.data))
                 .catch(function (error) {
                     console.log(error);
                 });
-
         }
 
         req();
-        // handleData();
     }, []);
 
     return (
@@ -74,8 +84,9 @@ const AssetsInfo = ({ company }) => {
             <div className="white">
                 {company[0]} <br />
                 {business} <br />
+                { }
                 {/* {historic.map((e) => <div> {e.close.toPrecision(4)} </div>)} */}
-                <StockChart info={  
+                {/* <StockChart info={  
                     {
                         stockFullName: "SW Limited.",
                         stockShortName: "ASX:SFW",
@@ -121,7 +132,8 @@ const AssetsInfo = ({ company }) => {
                             ],
                         },
                     }
-                } />
+                } /> */}
+                <LineChart closes={values} dates={datetimes} />
             </div>
         </>
     );

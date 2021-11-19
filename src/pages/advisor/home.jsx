@@ -82,6 +82,16 @@ export default class AdvisorHome extends React.Component {
                     <Row>
                         <Col xs="1"></Col>
                         <Col>
+                            <a href="../../assets/home">
+                                <div className="side-bar"><BsPersonLinesFill size={40} />
+                                    &nbsp;&nbsp;&nbsp;Assets[teste]</div>
+                            </a>
+                        </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <Col xs="1"></Col>
+                        <Col>
                             <a href="../">
                                 <div className="side-bar"><BsBoxArrowInLeft size={40} />
                                     &nbsp;&nbsp;&nbsp;Logout</div>
