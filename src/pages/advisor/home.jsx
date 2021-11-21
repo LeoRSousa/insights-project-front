@@ -1,7 +1,7 @@
 import React from "react";
 import "./home.css";
 import { Row, Col, Button } from "reactstrap";
-import { BsFillPersonPlusFill, BsFillPersonFill, BsBoxArrowInLeft, BsPersonLinesFill } from "react-icons/bs";
+import { BsFillPersonPlusFill, BsFillPersonFill, BsBoxArrowInLeft, BsPersonLinesFill, BsCurrencyDollar } from "react-icons/bs";
 import ClientCard from "../../components/getClients";
 import axios from "axios";
 
@@ -83,8 +83,8 @@ export default class AdvisorHome extends React.Component {
                         <Col xs="1"></Col>
                         <Col>
                             <a href="../../assets/home">
-                                <div className="side-bar"><BsPersonLinesFill size={40} />
-                                    &nbsp;&nbsp;&nbsp;Assets[teste]</div>
+                                <div className="side-bar"><BsCurrencyDollar size={40} />
+                                    &nbsp;&nbsp;&nbsp;Portifólio</div>
                             </a>
                         </Col>
                     </Row>

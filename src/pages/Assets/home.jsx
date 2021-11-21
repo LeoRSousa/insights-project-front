@@ -11,12 +11,40 @@ class AssetsHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sym: ['A1', '2', '3'],
+            sym: [],
+            open: false,
+            selected: 'Selecione'
         };
     }
 
+    handleChangeDropdown(value) {
+        this.setState({ selected: value });
+    }
+
+    componentDidMount() {
+        var self = this;
+        var config = {
+            method: 'get',
+            url: 'http://localhost:5003/assets',
+            headers: {}
+        };
+        axios(config)
+            .then(function (response) {
+                self.setState({ sym: response.data })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
     render() {
-        let open = false;
+        let assets;
+        var selectedBuss = this.state.selected;
+        if (selectedBuss != 'Selecione') {
+            console.log(this.state.selected);
+            let res = [this.state.selected];
+            assets = <AssetsInfo company={res} />
+        }
         return (
             <>
                 {/* Retangle-2 = Sidebar */}
@@ -62,33 +90,26 @@ class AssetsHome extends React.Component {
                         <h1>Assets</h1>
                     </div>
                     <div>
-                        <Dropdown isOpen={open} toggle={function noRefCheck() { }}>
-                            <DropdownToggle caret onClick={function change() {
-                                open == true
-                                    ? open = false
-                                    : open = true
+                        <Row>
+                            <h6 className="Txt-1">Empresas:</h6>
+                            <Dropdown isOpen={this.state.open} toggle={() => {
+                                this.state.open == true
+                                    ? this.setState({ open: false })
+                                    : this.setState({ open: true })
                             }}>
-                                Selecione
-                            </DropdownToggle>
-                            <DropdownMenu container="body" >
-                                {this.state.sym.map((item) => <DropdownItem>{item}</DropdownItem>
-                                )}
-                            </DropdownMenu>
-                        </Dropdown>
+                                <DropdownToggle caret>
+                                    {this.state.selected}
+                                </DropdownToggle>
+                                <DropdownMenu container="body">
+                                    {this.state.sym.map((item) => <DropdownItem onClick={() => this.handleChangeDropdown(item)}>{item}</DropdownItem>
+                                    )}
+                                </DropdownMenu>
+                            </Dropdown>
+                        </Row>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown button
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                    <br /><br />
-                    <AssetsInfo company={ ["ITSA4.SA"] }/>
 
+                    {assets}
+                    
                 </div>
             </>
         );
