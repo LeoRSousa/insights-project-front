@@ -10,6 +10,7 @@ OBS.:
 1) O front vai rodar na porta 5500. 
 Caso seja preciso mudar, é só abrir em "package.json" e mudar o valor de "SET PORT".
 Como na imagem: 
+
 ![alt text](https://i.imgur.com/87zDXPN.png)
 
 2) Back-end: https://github.com/lucasblazzi/insights-project
