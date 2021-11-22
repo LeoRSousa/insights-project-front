@@ -13,4 +13,4 @@ Como na imagem:
 
 ![alt text](https://i.imgur.com/87zDXPN.png)
 
-2) Back-end: https://github.com/lucasblazzi/insights-project
+2) Back-end está aqui: https://github.com/lucasblazzi/insights-project
