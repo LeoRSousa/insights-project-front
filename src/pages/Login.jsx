@@ -1,10 +1,13 @@
+//sessionStorage.clear(); para logout
 import React from 'react';
-import './Login.css'
 
+import './Login.css'
 import logo from "../assets/3.png";
+
 import { Col, Row, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { render } from '@testing-library/react';
 import { useLocation, Link } from "react-router-dom";
+import axios from 'axios';
 
 class Login extends React.Component {
   constructor(props) {
@@ -33,14 +36,40 @@ class Login extends React.Component {
   }
 
   handleSubmit(event) {
-    const result = `"username": "${this.state.email}", "password": "${this.state.password}"`;
+    var self = this;
 
-    alert(`JSON: ${result}`);
+    var result = JSON.stringify({
+      "email": this.state.email,
+      "password": this.state.password
+    });
 
-    // <Link to={{
-    //   pathname: '/advisor/home',
-    //   state: {adv_id: event.target.value}
-    // }} />
+    var config = {
+      method: 'post',
+      url: 'http://localhost:5002/advisor/login',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: result
+    };
+
+    axios(config)
+      .then(function (response) {
+        if (response.data == "User not found") {
+          alert("Login inválido.\nConfira suas credenciais!");
+        } else {
+          var id = response.data.id;
+          window.sessionStorage.setItem('adv_id', id);
+          // console.log(sessionStorage.getItem('adv_id'));
+          window.location.replace('http://localhost:5500/advisor/home');
+        }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    // alert(`JSON: ${result}`);
+
     event.preventDefault();
   }
 

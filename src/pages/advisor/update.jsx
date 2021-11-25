@@ -22,7 +22,7 @@ class UpdateAdvisor extends React.Component {
         var self = this;
         var config = {
             method: 'get',
-            url: 'http://localhost:5002/advisor/1',
+            url: 'http://localhost:5002/advisor/' + window.sessionStorage.getItem('adv_id'),
             headers: {}
         };
         axios(config)
@@ -53,7 +53,7 @@ class UpdateAdvisor extends React.Component {
         });
         var config = {
             method: 'post',
-            url: 'http://localhost:5002/advisor/update/1',//Tocar o user depois para uma var
+            url: 'http://localhost:5002/advisor/update/' + window.sessionStorage.getItem('adv_id'),
             headers: {
                 'Content-Type': 'application/json'
             },
