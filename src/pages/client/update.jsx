@@ -3,8 +3,8 @@ import './create.css';
 
 import account_circle from "../../assets/ic_account_circle_white_48dp.png";
 
-import { Form, FormGroup, Label, Col, Input, Row } from 'reactstrap';
-import { BsFillPersonPlusFill, BsFillPersonFill, BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
+import { Form, FormGroup, Label, Col, Input, Row, Button } from 'reactstrap';
+import { BsFillPersonFill, BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
 import axios from "axios";
 import { withRouter } from 'react-router-dom';
 
@@ -169,11 +169,10 @@ class UpdateClient extends React.Component {
                                 </Col>
                             </FormGroup>
                             <div className="cb">
-                                {/* <Button secondary>
-                                Enviar
-                            </Button> */}
+                                <Button secondary>
+                                    <input type="submit" value="Enviar" style={{backgroundColor: "transparent", color: "white", border: "none"}}/>
+                                </Button>
 
-                                <input type="submit" value="Enviar" />
                             </div>
 
                         </Form>

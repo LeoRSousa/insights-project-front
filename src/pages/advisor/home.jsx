@@ -1,26 +1,28 @@
 import React from "react";
+
 import "./home.css";
+import ClientCard from "../../components/getClients";
+
 import { Row, Col, Button } from "reactstrap";
 import { BsFillPersonPlusFill, BsFillPersonFill, BsBoxArrowInLeft, BsPersonLinesFill, BsCurrencyDollar } from "react-icons/bs";
-import ClientCard from "../../components/getClients";
 import axios from "axios";
+import { withRouter } from 'react-router-dom';
 
-export default class AdvisorHome extends React.Component {
+class AdvisorHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             adv: '',
+            adv_id: window.sessionStorage.getItem('adv_id'),
         };
-
-        this.editClient = this.editClient.bind(this);
-        this.deleteClient = this.deleteClient.bind(this);
     }
 
     componentDidMount() {
         var self = this;
+        console.log(typeof(self.state.adv_id));
         var config = {
             method: 'get',
-            url: 'http://localhost:5002/advisor/3',
+            url: 'http://localhost:5002/advisor/' + self.state.adv_id,
             headers: {}
         };
         axios(config)
@@ -31,14 +33,6 @@ export default class AdvisorHome extends React.Component {
                 console.log(error);
             });
     };
-
-    editClient(event) {
-        alert('Edit');
-    }
-
-    deleteClient(event) {
-        alert('Delete');
-    }
 
     render() {
         return (
@@ -93,6 +87,10 @@ export default class AdvisorHome extends React.Component {
                         <Col xs="1"></Col>
                         <Col>
                             <a href="../">
+                                {/* //sessionStorage.clear(); para logout */}
+                                <script>
+                                    window.sessionStorage.clear();
+                                </script>
                                 <div className="side-bar"><BsBoxArrowInLeft size={40} />
                                     &nbsp;&nbsp;&nbsp;Logout</div>
                             </a>
@@ -112,3 +110,5 @@ export default class AdvisorHome extends React.Component {
         );
     }
 }
+
+export default withRouter(AdvisorHome);

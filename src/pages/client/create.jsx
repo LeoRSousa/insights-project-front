@@ -36,7 +36,7 @@ class CreateClient extends React.Component {
         var self = this;
         var config = {
             method: 'get',
-            url: 'http://localhost:5002/advisor/1',
+            url: 'http://localhost:5002/advisor/' + window.sessionStorage.getItem('adv_id'),
             headers: {}
         };
         axios(config)
@@ -75,7 +75,7 @@ class CreateClient extends React.Component {
             "complement": this.state.complement,
             "zip_code": this.state.zip_code,
             "obs": this.state.obs,
-            "advisor_id": 1 //Mudar o id do advisor depois!
+            "advisor_id": parseInt(window.sessionStorage.getItem('adv_id')) //Mudar o id do advisor depois!
         });
         this.state.resultado = result;
         console.log(this.state.resultado);
@@ -96,9 +96,6 @@ class CreateClient extends React.Component {
             .catch(function (error) {
                 alert(error);
             });
-        // this.req();
-        // JSON.stringify(result);
-        // alert(`JSON: ${result}`);
         event.preventDefault();
     }
 
@@ -314,23 +311,6 @@ class CreateClient extends React.Component {
                                         id="estate"
                                         name="estate"
                                         placeholder="Seu estado"
-                                        type="text"
-                                        onChange={this.handleInputChange.bind(this)}
-                                    />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label
-                                    for="status"
-                                    sm={2}
-                                >
-                                    Status
-                                </Label>
-                                <Col sm={10}>
-                                    <Input
-                                        id="status"
-                                        name="status"
-                                        placeholder=""
                                         type="text"
                                         onChange={this.handleInputChange.bind(this)}
                                     />
