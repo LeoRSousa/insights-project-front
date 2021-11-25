@@ -4,15 +4,16 @@ import "../pages/advisor/home.css";
 import UpdateClient from "../pages/client/update.jsx";
 
 import axios from "axios";
-import { Route, Link, Switch } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { Row, Col, Button } from "reactstrap";
 import { BsPersonFill, BsFillTrashFill, BsPencilFill } from "react-icons/bs";
 
 
-function GetClient() {
+var GetClient = () => {
 
     const [res, setRes] = useState([]);
     const [delRes, setDelRes] = useState('');
+    let location = useLocation();
 
     function deleteItem(elem) {
         console.log(elem.id);
@@ -69,20 +70,11 @@ function GetClient() {
                                 <Button className="white"><BsPencilFill size={30} color="black" />
                                 </Button>
                             </Link>
-
-
-                            {/* {edit ? <UpdateClient id={e.id} /> : <Button className="white" onClick={setEdit(true)}><BsPencilFill size={30} color="black"/></Button> } */}
-                            {/* Não deve funcionar o direcionamento abaixo */}
-                            {/* Procurar: Replace React component with another react component */}
-                            {/* <Route exact path='../pages/client/update'>
-                                    <UpdateClient id={e.id} />
-                                </Route> */}
                         </div>
                     </Col>
                 </a>
                 </Row>
-    )
-}
+        )}
         </>
     );
 

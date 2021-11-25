@@ -1,11 +1,12 @@
 import React from "react";
 
-import { Col, Row, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import AssetsInfo from "../../components/assetsInfo";
 
+import { Col, Row, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import axios from "axios";
 import { BsFillPersonFill, BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
+import { withRouter } from 'react-router-dom';
 
-import AssetsInfo from "../../components/assetsInfo";
 
 class AssetsHome extends React.Component {
     constructor(props) {
@@ -13,7 +14,9 @@ class AssetsHome extends React.Component {
         this.state = {
             sym: [],
             open: false,
-            selected: 'Selecione'
+            selected: 'Selecione',
+            adv: '',
+            advisor_id: this.props.id,
         };
     }
 
@@ -23,6 +26,22 @@ class AssetsHome extends React.Component {
 
     componentDidMount() {
         var self = this;
+
+        //Request dos dados do card do advisor
+        var config2 = {
+            method: 'get',
+            url: 'http://localhost:5002/advisor/1',
+            headers: {}
+        };
+        axios(config2)
+            .then(function (response) {
+                self.setState({ adv: response.data })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        //Request da lista das siglas das empresas
         var config = {
             method: 'get',
             url: 'http://localhost:5003/assets',
@@ -43,7 +62,7 @@ class AssetsHome extends React.Component {
         if (selectedBuss != 'Selecione') {
             console.log(this.state.selected);
             let res = [this.state.selected];
-            assets = <AssetsInfo company={res} />
+            assets = <AssetsInfo company={res} adv_id={this.state.advisor_id}/>
         }
         return (
             <>
@@ -56,10 +75,10 @@ class AssetsHome extends React.Component {
                             <BsFillPersonFill size={40} />
                         </div>
                         <p className="Txt-1">
-                            Name <br />
-                            Email <br />
-                            City - ST <br />
-                            Cvm
+                            {this.state.adv.name} <br />
+                            {this.state.adv.email} <br />
+                            {this.state.adv.city} - {this.state.adv.state} <br />
+                            {this.state.adv.cvm_code}
                         </p>
                     </div>
                     <hr />
@@ -109,11 +128,11 @@ class AssetsHome extends React.Component {
                     </div>
 
                     {assets}
-                    
+
                 </div>
             </>
         );
     };
 }
 
-export default AssetsHome;
+export default withRouter(AssetsHome);

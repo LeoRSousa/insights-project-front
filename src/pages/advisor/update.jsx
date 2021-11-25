@@ -16,7 +16,6 @@ class UpdateAdvisor extends React.Component {
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        // this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     componentDidMount() {
@@ -28,7 +27,7 @@ class UpdateAdvisor extends React.Component {
         };
         axios(config)
             .then(function (response) {
-                self.setState({adv: response.data})
+                self.setState({ adv: response.data })
             })
             .catch(function (error) {
                 console.log(error);
@@ -70,6 +69,27 @@ class UpdateAdvisor extends React.Component {
             });
         // alert(`JSON: ${result}`);
         event.preventDefault();
+    }
+
+    handleDelete() {
+        var opt = window.confirm('Tem certeza que quer deletar este perfil?');
+        if (opt) {
+            var config = {
+                method: 'get',
+                url: 'localhost:5002/advisor/delete/1',//Tocar o user depois para uma var
+                headers: {}
+            };
+            axios(config)
+                .then(function (response) {
+                    alert('Advisor deletado!');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        } else {
+            // Do nothing!
+            console.log('Cancelado.');
+        }
     }
 
     render() {
@@ -164,6 +184,11 @@ class UpdateAdvisor extends React.Component {
                             </div>
 
                         </Form>
+                        <div>
+                            <Button secondary style={{ backgroundColor: "#212121", borderColor: "#212121", color: "red" }} onClick={this.handleDelete}>
+                                Apagar perfil
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </>

@@ -1,26 +1,24 @@
 import React from "react";
-import "./home.css";
+import "../advisor/home.css";
 import { Row, Col, Button } from "reactstrap";
-import { BsFillPersonPlusFill, BsFillPersonFill, BsBoxArrowInLeft, BsPersonLinesFill, BsCurrencyDollar } from "react-icons/bs";
-import ClientCard from "../../components/getClients";
+import { BsFillPersonPlusFill, BsFillPersonFill, BsBoxArrowInLeft, BsCurrencyDollar, BsFillHouseFill } from "react-icons/bs";
+import GetPortifolios from "../../components/getPortifolios";
 import axios from "axios";
 
-export default class AdvisorHome extends React.Component {
+export default class PortifolioHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             adv: '',
         };
 
-        this.editClient = this.editClient.bind(this);
-        this.deleteClient = this.deleteClient.bind(this);
     }
 
     componentDidMount() {
         var self = this;
         var config = {
             method: 'get',
-            url: 'http://localhost:5002/advisor/3',
+            url: 'http://localhost:5002/advisor/1',
             headers: {}
         };
         axios(config)
@@ -31,14 +29,6 @@ export default class AdvisorHome extends React.Component {
                 console.log(error);
             });
     };
-
-    editClient(event) {
-        alert('Edit');
-    }
-
-    deleteClient(event) {
-        alert('Delete');
-    }
 
     render() {
         return (
@@ -62,9 +52,9 @@ export default class AdvisorHome extends React.Component {
                     <Row>
                         <Col xs="1"></Col>
                         <Col>
-                            <a href="../client/create">
-                                <div className="side-bar"><BsFillPersonPlusFill size={40} />
-                                    &nbsp;&nbsp;&nbsp;Adicionar cliente</div>
+                            <a href="../advisor/home">
+                                <div className="side-bar"><BsFillHouseFill size={40} />
+                                    &nbsp;&nbsp;&nbsp;Página Inicial</div>
                             </a>
                         </Col>
                     </Row>
@@ -72,19 +62,10 @@ export default class AdvisorHome extends React.Component {
                     <Row>
                         <Col xs="1"></Col>
                         <Col>
-                            <a href="./update">
-                                <div className="side-bar"><BsPersonLinesFill size={40} />
-                                    &nbsp;&nbsp;&nbsp;Editar perfil</div>
-                            </a>
-                        </Col>
-                    </Row>
-                    <hr />
-                    <Row>
-                        <Col xs="1"></Col>
-                        <Col>
-                            <a href="../../portifolio/home">
+                            <a href=""> 
+                            {/* Rota para página de criar portifólio */}
                                 <div className="side-bar"><BsCurrencyDollar size={40} />
-                                    &nbsp;&nbsp;&nbsp;Portifólio</div>
+                                    &nbsp;&nbsp;&nbsp;Adicionar Portifólio</div>
                             </a>
                         </Col>
                     </Row>
@@ -104,10 +85,11 @@ export default class AdvisorHome extends React.Component {
                 <div className="Rectangle-1">
                     <br />
                     <br />
-                    <h1>CLIENTES</h1>
+                    <h1>PORTIFÓLIOS</h1>
                     <br />
-                    <ClientCard />
+                    <GetPortifolios />
                 </div>
+
             </>
         );
     }

@@ -20,7 +20,7 @@ class CreateAdvisor extends React.Component {
             cel: '',
             address: '',
             city: '',
-            estate: '',
+            state: '',
             complement: '',
             zip_code: '',
             obs: '',
@@ -54,14 +54,14 @@ class CreateAdvisor extends React.Component {
             "cel": this.state.cel,
             "address": this.state.address,
             "city": this.state.city,
-            "estate": this.state.estate,
+            "state": this.state.state,
             "status": 1,
             "complement": this.state.complement,
             "zip_code": this.state.zip_code,
             "obs": this.state.obs,
             "birth": this.state.birth,
-            "salary": this.state.salar,
-            "work_code": this.state.work_cod,
+            "salary": this.state.salary,
+            "work_code": this.state.work_code,
             "cvm_code": this.state.cvm_code
         });
 
@@ -75,7 +75,7 @@ class CreateAdvisor extends React.Component {
         };
         axios(config)
             .then(function (response) {
-                alert('Advisor criado!');
+                alert('Advisor criado!\n' + JSON.stringify(response.data));
                 window.location.replace('http://localhost:5500/');
             })
             .catch(function (error) {
@@ -121,7 +121,7 @@ class CreateAdvisor extends React.Component {
                 <div className="Rectangle-1">
                     <div className='title'>
                         <img src={account_circle} alt="Profile Icon" />
-                        <h1>Criar usuário</h1>
+                        <h1>Criar Assessor</h1>
                     </div>
                     <div className='main-form'>
                         <Form onSubmit={this.handleSubmit.bind(this)}>
@@ -262,33 +262,16 @@ class CreateAdvisor extends React.Component {
                             </FormGroup>
                             <FormGroup row>
                                 <Label
-                                    for="estate"
+                                    for="state"
                                     sm={2}
                                 >
                                     Estado
                                 </Label>
                                 <Col sm={10}>
                                     <Input
-                                        id="estate"
-                                        name="estate"
+                                        id="state"
+                                        name="state"
                                         placeholder="Seu estado"
-                                        type="text"
-                                        onChange={this.handleInputChange.bind(this)}
-                                    />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label
-                                    for="status"
-                                    sm={2}
-                                >
-                                    Status
-                                </Label>
-                                <Col sm={10}>
-                                    <Input
-                                        id="status"
-                                        name="status"
-                                        placeholder=""
                                         type="text"
                                         onChange={this.handleInputChange.bind(this)}
                                     />
@@ -375,6 +358,7 @@ class CreateAdvisor extends React.Component {
                                         name="salary"
                                         placeholder="1234.56"
                                         type="number"
+                                        step={0.01}
                                         onChange={this.handleInputChange.bind(this)}
                                     />
                                 </Col>

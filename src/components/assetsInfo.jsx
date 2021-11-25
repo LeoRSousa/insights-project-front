@@ -4,7 +4,7 @@ import axios from "axios";
 import StockChart from "./stockChart";
 import LineChart from "./line"
 
-const AssetsInfo = ({ company }) => {
+const AssetsInfo = ({ company, adv_id }) => {
     const [historic, setHistoric] = useState([]);
     const [business, setBusiness] = useState([]);
     const [values, setValues] = useState([]);
@@ -79,7 +79,7 @@ const AssetsInfo = ({ company }) => {
                 {business} <br /> */}
                 { }
                 {/* {historic.map((e) => <div> {e.close.toPrecision(4)} </div>)} */}
-                <LineChart closes={values} dates={datetimes} infos={business} company={company} />
+                <LineChart closes={values} dates={datetimes} infos={business} company={company} advisor={adv_id}/>
             </div>
         </>
     );

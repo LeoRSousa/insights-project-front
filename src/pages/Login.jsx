@@ -4,6 +4,7 @@ import './Login.css'
 import logo from "../assets/3.png";
 import { Col, Row, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { render } from '@testing-library/react';
+import { useLocation, Link } from "react-router-dom";
 
 class Login extends React.Component {
   constructor(props) {
@@ -32,9 +33,14 @@ class Login extends React.Component {
   }
 
   handleSubmit(event) {
-    const result = `"email": "${this.state.email}", "password": "${this.state.password}"`;
+    const result = `"username": "${this.state.email}", "password": "${this.state.password}"`;
 
     alert(`JSON: ${result}`);
+
+    // <Link to={{
+    //   pathname: '/advisor/home',
+    //   state: {adv_id: event.target.value}
+    // }} />
     event.preventDefault();
   }
 

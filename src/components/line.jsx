@@ -6,9 +6,9 @@ import { Line } from 'react-chartjs-2';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 
-function handleSubmit(a, p, c) {
-    console.log('a');
-    alert('{"id": "' + c + '", "proportion": ' + p + ', "amount": ' + a + '}');
+function handleSubmit(am, p, c, ad) {
+    console.log('Adv.: ' + ad);
+    alert('{"id": "' + c + '", "proportion": ' + p + ', "amount": ' + am + '}');
     // var config = {
     //     method: 'post',
     //     url: 'http://localhost:5001/client/create',
@@ -82,7 +82,7 @@ const options = {
     maintainAspectRatio: false
 };
 
-const LineChart = ({ closes, dates, infos, company }) => {
+const LineChart = ({ closes, dates, infos, company, advisor }) => {
 
     const data = buildData(closes, dates);
     const [amounts, setAmounts] = useState('');
@@ -107,7 +107,7 @@ const LineChart = ({ closes, dates, infos, company }) => {
                     </Col>
                 </Row>
                 <Col sm={8} className='card-input-field'>
-                    <Form onSubmit={(e) => handleSubmit(amounts, propt, company)}>
+                    <Form onSubmit={(e) => handleSubmit(amounts, propt, company, advisor)}>
                         <FormGroup row>
                             <Label
                                 for="amounts"
