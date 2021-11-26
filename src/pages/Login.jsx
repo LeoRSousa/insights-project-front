@@ -18,6 +18,7 @@ class Login extends React.Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    window.sessionStorage.setItem('adv_id', '');
   }
 
   handleInputChange(event) {
@@ -60,7 +61,9 @@ class Login extends React.Component {
           var id = response.data.id;
           window.sessionStorage.setItem('adv_id', id);
           // console.log(sessionStorage.getItem('adv_id'));
-          window.location.replace('http://localhost:5500/advisor/home');
+          if(window.sessionStorage.getItem('adv_id') != '') {
+            window.location.replace('http://localhost:5500/advisor/home');
+          }
         }
 
       })

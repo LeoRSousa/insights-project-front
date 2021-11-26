@@ -70,7 +70,7 @@ class GetClient extends React.Component {
                     count === 0
                         ? <div style={{color: "white"}}> 
                             <h2>Nada por aqui!</h2>
-                            <a href="../client/create">Criar cliente?...</a>
+                            <a href="../client/create">Adicionar cliente?...</a>
                         </div>
                         : this.state.res.map((e) =>
                             (e.advisor_id == window.sessionStorage.getItem('adv_id'))

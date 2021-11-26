@@ -76,12 +76,13 @@ class UpdateAdvisor extends React.Component {
         if (opt) {
             var config = {
                 method: 'get',
-                url: 'localhost:5002/advisor/delete/1',//Tocar o user depois para uma var
+                url: 'http://localhost:5002/advisor/delete/' + window.sessionStorage.getItem('adv_id'),
                 headers: {}
             };
             axios(config)
                 .then(function (response) {
                     alert('Advisor deletado!');
+                    window.location.replace('http://localhost:5500');
                 })
                 .catch(function (error) {
                     console.log(error);
