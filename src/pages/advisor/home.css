@@ -2,6 +2,7 @@
 rgba(38,38,38,255)
 #212121
 rgba(33,33,33,255) */
+
 .Rectangle-1 {
     align-self: flex-end;
     justify-self: right;
@@ -38,11 +39,13 @@ rgba(33,33,33,255) */
     text-align: center;
     text-align: center;
     /* background: url(https://w7.pngwing.com/pngs/282/256/png-transparent-user-profile-avatar-computer-icons-google-account-black-accounting-user-interface.png); */
-    background-image: url("https://pt.seaicons.com/wp-content/uploads/2015/11/App-Twitter-icon1.png");
+    background-image: url(../../assets/user-circle-solid-white.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     margin-left: calc(25vw/8);
     width: calc(25vw/4);
     height: calc(25vw/4);
-    background: #C4C4C4;
+    /* background: #C4C4C4; */
     border-radius: 50%;
 }
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
-import StockChart from "./stockChart";
 import LineChart from "./line"
 
 const AssetsInfo = ({ company, adv_id }) => {
@@ -75,10 +74,6 @@ const AssetsInfo = ({ company, adv_id }) => {
     return (
         <>
             <div>
-                {/* {company[0]} <br />
-                {business} <br /> */}
-                { }
-                {/* {historic.map((e) => <div> {e.close.toPrecision(4)} </div>)} */}
                 <LineChart closes={values} dates={datetimes} infos={business} company={company} advisor={adv_id}/>
             </div>
         </>
