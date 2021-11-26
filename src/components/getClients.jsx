@@ -80,6 +80,7 @@ class GetClient extends React.Component {
                                             <div className="card-text"> <b>{e.name.toUpperCase()}</b> <br /> {e.email} Id:{e.id} </div>
                                             <div className="card-icons-but">
                                                 <Button className="white" onClick={() => this.deleteItem(e.id)}><BsFillTrashFill size={30} color="black" /></Button>
+                                                {/* BsThreeDotsVertical */}
                                                 &nbsp;&nbsp;
                                                 <Link to={{
                                                     pathname: "../client/update",

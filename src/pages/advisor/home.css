@@ -67,7 +67,7 @@ rgba(33,33,33,255) */
     background: #ffffff;
     /* superior | direita | inferior | esquerda */
     margin: 2em 8em 2em 8em;
-    height: calc(10vh);
+    height: calc(8vh);
     border-radius: 10px;
     justify-content: space-between;
 }

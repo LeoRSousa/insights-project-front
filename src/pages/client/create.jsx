@@ -5,7 +5,7 @@ import axios from "axios";
 import account_circle from "../../assets/ic_account_circle_white_48dp.png";
 
 import { Form, FormGroup, Label, Col, Input, Button, Row } from 'reactstrap';
-import { BsFillPersonPlusFill, BsFillPersonFill, BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
+import { BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
 
 class CreateClient extends React.Component {
     constructor(props) {
