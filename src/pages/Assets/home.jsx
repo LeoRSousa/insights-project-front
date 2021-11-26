@@ -72,7 +72,6 @@ class AssetsHome extends React.Component {
                     <div className="Rectangle-3">
                         <br />
                         <div className="Ellipse-1"><br />
-                            <BsFillPersonFill size={40} />
                         </div>
                         <p className="Txt-1">
                             {this.state.adv.name} <br />

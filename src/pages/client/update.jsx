@@ -4,7 +4,7 @@ import './create.css';
 import account_circle from "../../assets/ic_account_circle_white_48dp.png";
 
 import { Form, FormGroup, Label, Col, Input, Row, Button } from 'reactstrap';
-import { BsFillPersonFill, BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
+import { BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
 import axios from "axios";
 import { withRouter } from 'react-router-dom';
 
@@ -26,7 +26,7 @@ class UpdateClient extends React.Component {
         var self = this;
         var config = {
             method: 'get',
-            url: 'http://localhost:5002/advisor/1',
+            url: 'http://localhost:5002/advisor/' +  window.sessionStorage.getItem('adv_id'),
             headers: {}
         };
         axios(config)
@@ -50,10 +50,8 @@ class UpdateClient extends React.Component {
     }
 
     handleSubmit(event) {
-        // const result = `{"name": "${this.state.name}", "cpf": "${this.state.cpf}", "user": "${this.state.username}"}`;
         const result = { "name": this.state.name, "cpf": this.state.cpf, "username": this.state.username };
         var _data = JSON.stringify(result);
-        // alert(`JSON: ${data}`);
         var config = {
             method: 'post',
             url: 'http://localhost:5001/client/update/' + this.state.id,
@@ -69,8 +67,6 @@ class UpdateClient extends React.Component {
     }
 
     render() {
-        // console.log(this.props);
-        // console.log("ID: " + this.props.location.state.id);
         return (
             <>
                 <div className="Rectangle-2">
@@ -78,7 +74,6 @@ class UpdateClient extends React.Component {
                     <div className="Rectangle-3">
                         <br />
                         <div className="Ellipse-1"><br />
-                            <BsFillPersonFill size={40} />
                         </div>
                         <p className="Txt-1">
                             {this.state.adv.name} <br />

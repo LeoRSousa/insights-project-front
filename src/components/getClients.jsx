@@ -16,24 +16,22 @@ class GetClient extends React.Component {
             delRes: '',
         };
 
-        this.deleteItem = this.deleteItem.bind(this);
     }
-
-    // const [res, setRes] = useState([]);
-    // const [delRes, setDelRes] = useState('');
-    // let location = useLocation();
 
     deleteItem(elem) {
         const self = this;
-        console.log(elem.id);
+        console.log(elem);
         var config = {
             method: 'get',
-            url: 'http://localhost:5001/client/delete/' + elem.id,
+            url: 'http://localhost:5001/client/delete/' + elem,
             headers: {}
         };
 
         axios(config)
-            .then(function (response) { self.setState({ delRes: JSON.stringify(response) }); }) 
+            .then(function (response) { 
+                alert(JSON.stringify(response));
+                self.setState({ delRes: JSON.stringify(response) }); 
+            }) 
             .catch(function (error) { self.setState({ delRes: error }); });
         
         if(this.state.delRes == '1') {
@@ -81,7 +79,8 @@ class GetClient extends React.Component {
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <div className="card-text"> <b>{e.name.toUpperCase()}</b> <br /> {e.email} Id:{e.id} </div>
                                             <div className="card-icons-but">
-                                                <Button className="white" onClick={this.deleteItem(e.id)}><BsFillTrashFill size={30} color="black" /></Button>
+                                                <Button className="white" onClick={() => this.deleteItem(e.id)}><BsFillTrashFill size={30} color="black" /></Button>
+                                                {/* BsThreeDotsVertical */}
                                                 &nbsp;&nbsp;
                                                 <Link to={{
                                                     pathname: "../client/update",

@@ -1,7 +1,7 @@
 import React from "react";
 import "../advisor/home.css";
 import { Row, Col, Button } from "reactstrap";
-import { BsFillPersonPlusFill, BsFillPersonFill, BsBoxArrowInLeft, BsCurrencyDollar, BsFillHouseFill } from "react-icons/bs";
+import { BsBoxArrowInLeft, BsCurrencyDollar, BsFillHouseFill } from "react-icons/bs";
 import GetPortifolios from "../../components/getPortifolios";
 import axios from "axios";
 
@@ -39,7 +39,6 @@ export default class PortifolioHome extends React.Component {
                     <div className="Rectangle-3">
                         <br />
                         <div className="Ellipse-1"><br />
-                            <BsFillPersonFill size={40} />
                         </div>
                         <p className="Txt-1">
                             {this.state.adv.name} <br />
