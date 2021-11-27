@@ -4,7 +4,7 @@ import AssetsInfo from "../../components/assetsInfo";
 
 import { Col, Row, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import axios from "axios";
-import { BsFillPersonFill, BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
+import { BsFillHouseFill, BsBoxArrowInLeft, BsCurrencyDollar } from "react-icons/bs";
 import { withRouter } from 'react-router-dom';
 
 
@@ -16,7 +16,7 @@ class AssetsHome extends React.Component {
             open: false,
             selected: 'Selecione',
             adv: '',
-            advisor_id: this.props.id,
+            pf_id: 0,
         };
     }
 
@@ -26,11 +26,12 @@ class AssetsHome extends React.Component {
 
     componentDidMount() {
         var self = this;
+        this.setState({ pf_id: parseInt(this.props.location.state.pf_id) })
 
         //Request dos dados do card do advisor
         var config2 = {
             method: 'get',
-            url: 'http://localhost:5002/advisor/1',
+            url: 'http://localhost:5002/advisor/' + window.sessionStorage.getItem('adv_id'),
             headers: {}
         };
         axios(config2)
@@ -62,7 +63,7 @@ class AssetsHome extends React.Component {
         if (selectedBuss != 'Selecione') {
             console.log(this.state.selected);
             let res = [this.state.selected];
-            assets = <AssetsInfo company={res} adv_id={this.state.advisor_id}/>
+            assets = <AssetsInfo company={res} pf_id={this.state.pf_id}/>
         }
         return (
             <>
@@ -77,7 +78,7 @@ class AssetsHome extends React.Component {
                             {this.state.adv.name} <br />
                             {this.state.adv.email} <br />
                             {this.state.adv.city} - {this.state.adv.state} <br />
-                            {this.state.adv.cvm_code}
+                            CVM: {this.state.adv.cvm_code}
                         </p>
                     </div>
                     <hr />
@@ -87,6 +88,16 @@ class AssetsHome extends React.Component {
                             <a href="../advisor/home">
                                 <div className="side-bar"><BsFillHouseFill size={40} />
                                     &nbsp;&nbsp;&nbsp;Página Inicial</div>
+                            </a>
+                        </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <Col xs="1"></Col>
+                        <Col>
+                            <a href="../portifolio/home">
+                                <div className="side-bar"><BsCurrencyDollar size={40} />
+                                    &nbsp;&nbsp;&nbsp;Portifólio</div>
                             </a>
                         </Col>
                     </Row>

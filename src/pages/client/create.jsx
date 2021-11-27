@@ -60,42 +60,46 @@ class CreateClient extends React.Component {
     }
 
     handleSubmit(event) {
-        const result = JSON.stringify({
-            "name": this.state.name,
-            "cpf": this.state.cpf,
-            "username": this.state.username,
-            "email": this.state.email,
-            "password": this.state.password,
-            "suitability": this.state.suitability,
-            "cel": this.state.cel,
-            "address": this.state.address,
-            "city": this.state.city,
-            "state": this.state.estate,
-            "status": 1,
-            "complement": this.state.complement,
-            "zip_code": this.state.zip_code,
-            "obs": this.state.obs,
-            "advisor_id": parseInt(window.sessionStorage.getItem('adv_id')) //Mudar o id do advisor depois!
-        });
-        this.state.resultado = result;
-        console.log(this.state.resultado);
-        var config = {
-            method: 'post',
-            url: 'http://localhost:5001/client/create',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: this.state.resultado
-        };
-
-        axios(config)
-            .then(function (response) {
-                alert('Usuário criado!');
-                window.location.replace('http://localhost:5500/advisor/home');
-            })
-            .catch(function (error) {
-                alert(error);
+        if(this.state.name == '' || this.state.username == '' || this.state.password == '' || this.state.email == '') {
+            alert("Campos marcados com * são obrigatórios");
+        }else {
+            const result = JSON.stringify({
+                "name": this.state.name,
+                "cpf": this.state.cpf,
+                "username": this.state.username,
+                "email": this.state.email,
+                "password": this.state.password,
+                "suitability": this.state.suitability,
+                "cel": this.state.cel,
+                "address": this.state.address,
+                "city": this.state.city,
+                "state": this.state.estate,
+                "status": 1,
+                "complement": this.state.complement,
+                "zip_code": this.state.zip_code,
+                "obs": this.state.obs,
+                "advisor_id": parseInt(window.sessionStorage.getItem('adv_id')) //Mudar o id do advisor depois!
             });
+            this.state.resultado = result;
+            console.log(this.state.resultado);
+            var config = {
+                method: 'post',
+                url: 'http://localhost:5001/client/create',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: this.state.resultado
+            };
+    
+            axios(config)
+                .then(function (response) {
+                    alert('Usuário criado!');
+                    window.location.replace('http://localhost:5500/advisor/home');
+                })
+                .catch(function (error) {
+                    alert(error);
+                });
+        }
         event.preventDefault();
     }
 
@@ -113,7 +117,7 @@ class CreateClient extends React.Component {
                             {this.state.adv.name} <br />
                             {this.state.adv.email} <br />
                             {this.state.adv.city} - {this.state.adv.state} <br />
-                            {this.state.adv.cvm_code}
+                            CVM: {this.state.adv.cvm_code}
                         </p>
                     </div>
                     <hr />
@@ -151,7 +155,7 @@ class CreateClient extends React.Component {
                                     for="name"
                                     sm={2}
                                 >
-                                    Nome
+                                    Nome*
                                 </Label>
                                 <Col sm={10}>
                                     <Input
@@ -185,7 +189,7 @@ class CreateClient extends React.Component {
                                     for="username"
                                     sm={2}
                                 >
-                                    Usuário
+                                    Usuário*
                                 </Label>
                                 <Col sm={10}>
                                     <Input
@@ -202,7 +206,7 @@ class CreateClient extends React.Component {
                                     for="email"
                                     sm={2}
                                 >
-                                    Email
+                                    Email*
                                 </Label>
                                 <Col sm={10}>
                                     <Input
@@ -219,7 +223,7 @@ class CreateClient extends React.Component {
                                     for="password"
                                     sm={2}
                                 >
-                                    Senha
+                                    Senha*
                                 </Label>
                                 <Col sm={10}>
                                     <Input
@@ -366,7 +370,7 @@ class CreateClient extends React.Component {
                                     />
                                 </Col>
                             </FormGroup>
-
+                            *Campos obrigatórios
                             <div className="cb">
                                 <Button secondary>
                                     Enviar

@@ -18,8 +18,12 @@ class AdvisorHome extends React.Component {
     }
 
     componentDidMount() {
+        if(window.sessionStorage.getItem('adv_id') == null) {
+            alert("Parece que sua sessão não está ativa");
+            window.location.replace('http://localhost:5500');
+        }
         var self = this;
-        console.log(typeof(self.state.adv_id));
+        console.log(typeof (self.state.adv_id));
         var config = {
             method: 'get',
             url: 'http://localhost:5002/advisor/' + self.state.adv_id,
@@ -48,54 +52,52 @@ class AdvisorHome extends React.Component {
                             {this.state.adv.name} <br />
                             {this.state.adv.email} <br />
                             {this.state.adv.city} - {this.state.adv.state} <br />
-                            {this.state.adv.cvm_code}
+                            CVM: {this.state.adv.cvm_code}
                         </p>
                     </div>
                     <hr />
-                    <Row>
-                        <Col xs="1"></Col>
-                        <Col>
-                            <a href="../client/create">
-                                <div className="side-bar"><BsFillPersonPlusFill size={40} />
-                                    &nbsp;&nbsp;&nbsp;Adicionar cliente</div>
-                            </a>
-                        </Col>
-                    </Row>
-                    <hr />
-                    <Row>
-                        <Col xs="1"></Col>
-                        <Col>
-                            <a href="./update">
-                                <div className="side-bar"><BsPersonLinesFill size={40} />
-                                    &nbsp;&nbsp;&nbsp;Editar perfil</div>
-                            </a>
-                        </Col>
-                    </Row>
-                    <hr />
-                    <Row>
-                        <Col xs="1"></Col>
-                        <Col>
-                            <a href="../../portifolio/home">
-                                <div className="side-bar"><BsCurrencyDollar size={40} />
-                                    &nbsp;&nbsp;&nbsp;Portifólio</div>
-                            </a>
-                        </Col>
-                    </Row>
-                    <hr />
-                    <Row>
-                        <Col xs="1"></Col>
-                        <Col>
-                            <a href="../">
-                                {/* //sessionStorage.clear(); para logout */}
-                                <script>
-                                    window.sessionStorage.clear();
-                                </script>
-                                <div className="side-bar"><BsBoxArrowInLeft size={40} />
-                                    &nbsp;&nbsp;&nbsp;Logout</div>
-                            </a>
-                        </Col>
-                    </Row>
-                    <hr />
+                    <div className="sidebar">
+                        <Row>
+                            <Col xs="1"></Col>
+                            <Col>
+                                <a href="../client/create">
+                                    <div className="side-bar"><BsFillPersonPlusFill size={40} />
+                                        &nbsp;&nbsp;&nbsp;Adicionar cliente</div>
+                                </a>
+                            </Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Col xs="1"></Col>
+                            <Col>
+                                <a href="./update">
+                                    <div className="side-bar"><BsPersonLinesFill size={40} />
+                                        &nbsp;&nbsp;&nbsp;Editar perfil</div>
+                                </a>
+                            </Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Col xs="1"></Col>
+                            <Col>
+                                <a href="../../portifolio/home">
+                                    <div className="side-bar"><BsCurrencyDollar size={40} />
+                                        &nbsp;&nbsp;&nbsp;Portifólio</div>
+                                </a>
+                            </Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Col xs="1"></Col>
+                            <Col>
+                                <a href="../">
+                                    <div className="side-bar"><BsBoxArrowInLeft size={40} />
+                                        &nbsp;&nbsp;&nbsp;Logout</div>
+                                </a>
+                            </Col>
+                        </Row>
+                        <hr />
+                    </div>
                 </div>
 
                 <div className="Rectangle-1">

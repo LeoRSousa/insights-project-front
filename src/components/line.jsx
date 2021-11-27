@@ -6,26 +6,37 @@ import { Line } from 'react-chartjs-2';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 
-function handleSubmit(am, p, c, ad) {
-    console.log('Adv.: ' + ad);
-    alert('{"id": "' + c + '", "proportion": ' + p + ', "amount": ' + am + '}');
-    // var config = {
-    //     method: 'post',
-    //     url: 'http://localhost:5001/client/create',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     data: this.state.resultado
-    // };
+function handleSubmit(am, p, c, pf) {
+    console.log('{"id": "' + c + '", "proportion": ' + p + ', "amount": ' + am + '}');
+    var res = JSON.stringify({
+        "portfolio_id": pf,
+        "products": [
+            {
+              "id": c,
+              "proportion": (p/100),
+              "amount": parseFloat(am)
+            }
+          ]
+    });
+    console.log("RES " + res);
+    var config = {
+        method: 'post',
+        url: 'http://localhost:5004/product/add',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: res
+    };
 
-    // axios(config)
-    //     .then(function (response) {
-    //         alert('Usuário criado!');
-    //         window.location.replace('http://localhost:5500/advisor/home');
-    //     })
-    //     .catch(function (error) {
-    //         alert(error);
-    //     });
+    axios(config)
+        .then(function (response) {
+            console.log(response)
+            alert('Ativo adicionado!');
+            window.location.reload();
+        })
+        .catch(function (error) {
+            alert(error);
+        });
 
     // return 'a';
 }
@@ -82,11 +93,11 @@ const options = {
     maintainAspectRatio: false
 };
 
-const LineChart = ({ closes, dates, infos, company, advisor }) => {
+const LineChart = ({ closes, dates, infos, company, portifolio }) => {
 
     const data = buildData(closes, dates);
-    const [amounts, setAmounts] = useState('');
-    const [propt, setPropt] = useState('');
+    const [amounts, setAmounts] = useState(1.0);
+    const [propt, setPropt] = useState(1.0);
 
     return (
         <>
@@ -107,20 +118,21 @@ const LineChart = ({ closes, dates, infos, company, advisor }) => {
                     </Col>
                 </Row>
                 <Col sm={8} className='card-input-field'>
-                    <Form onSubmit={(e) => handleSubmit(amounts, propt, company, advisor)}>
+                    <Form onSubmit={(e) => handleSubmit(amounts, propt, company[0], portifolio)}>
                         <FormGroup row>
                             <Label
                                 for="amounts"
                                 sm={2}
                             >
-                                Quantidade:
+                                Valor:
                             </Label>
                             <Col sm={3}>
                                 <Input
                                     id="amounts"
                                     name="amounts"
-                                    placeholder="Quantidade"
-                                    type="text"
+                                    placeholder="$0.0"
+                                    type="number"
+                                    step={0.01}
                                     onChange={(e) => setAmounts(e.target.value)}
                                 />
                             </Col>
@@ -135,8 +147,11 @@ const LineChart = ({ closes, dates, infos, company, advisor }) => {
                                 <Input
                                     id="proportions"
                                     name="proportions"
-                                    placeholder="Proporção"
-                                    type="text"
+                                    placeholder="Proporção(%)"
+                                    type="number"
+                                    step={0.1}
+                                    min={0.1}
+                                    max={100}
                                     onChange={(e) => setPropt(e.target.value)}
                                 />
                             </Col>

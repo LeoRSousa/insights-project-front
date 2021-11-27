@@ -12,6 +12,8 @@ rgba(33,33,33,255) */
     height: 100vh;
     background: #212121;
     text-align: center;
+    min-width: 975px;
+    min-height: 625px;
 }
 
 .Rectangle-2 {
@@ -19,11 +21,13 @@ rgba(33,33,33,255) */
     width: 25vw;
     height: 100vh;
     background: #FFFFFF;
+    min-width: 300px;
 }
 
 .Rectangle-3 {
     /* superior | direita | inferior | esquerda */
     /* margin: 2em 0 0 2em; */
+    min-width: 146px;
     margin-left: calc(25vw/4);
     margin-top: calc(100vh/16);
     width: calc(25vw/2);
@@ -39,7 +43,7 @@ rgba(33,33,33,255) */
     text-align: center;
     text-align: center;
     /* background: url(https://w7.pngwing.com/pngs/282/256/png-transparent-user-profile-avatar-computer-icons-google-account-black-accounting-user-interface.png); */
-    background-image: url(../../assets/user-circle-solid-white.png);
+    background-image: url(../../assets/user-circle-solid-trasnparent.png);
     background-repeat: no-repeat;
     background-size: cover;
     margin-left: calc(25vw/8);
@@ -51,7 +55,9 @@ rgba(33,33,33,255) */
 
 .Txt-1 {
     margin-top: 0.5vh;
+    font-family: 'Now';
     font-weight: normal;
+    font-style: normal;
     font-size: 18px;
     text-align: center;
     color: #ffffff;
@@ -59,8 +65,10 @@ rgba(33,33,33,255) */
 }
 
 .side-bar {
+    font-family: 'Now Alt';
+    font-weight: 900;
+    font-style: normal;
     text-transform: uppercase;
-    font-weight: bold;
 }
 
 .card {
@@ -72,8 +80,15 @@ rgba(33,33,33,255) */
     justify-content: space-between;
 }
 
+.card-icons-but {
+    display: flex;
+    flex-direction: row;
+    color: black;
+    background-color: transparent;
+}
+
 .space-between>div:nth-child(3) {
-    margin-left: 80%;
+    margin-left: 48%;
     position: absolute;
     align-self: center;
 }
@@ -111,9 +126,21 @@ a:visited {
 
 .card-text {
     line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .btn:hover {
-    background-color: #e0e0e0;
+    background-color: #919191;
     border-color: white;
+}
+
+.Button:hover {
+    background-color: #919191;
+    border-color: white;
+}
+
+.main-form {
+    text-align: right;
 }

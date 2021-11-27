@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LineChart from "./line"
 
-const AssetsInfo = ({ company, adv_id }) => {
+const AssetsInfo = ({ company, pf_id }) => {
     const [historic, setHistoric] = useState([]);
     const [business, setBusiness] = useState([]);
     const [values, setValues] = useState([]);
@@ -74,7 +74,7 @@ const AssetsInfo = ({ company, adv_id }) => {
     return (
         <>
             <div>
-                <LineChart closes={values} dates={datetimes} infos={business} company={company} advisor={adv_id}/>
+                <LineChart closes={values} dates={datetimes} infos={business} company={company} portifolio={pf_id}/>
             </div>
         </>
     );

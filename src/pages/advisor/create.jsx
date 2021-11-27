@@ -90,21 +90,7 @@ class CreateAdvisor extends React.Component {
             <>
                 {/* Retangle-2 = Sidebar */}
                 <div className="Rectangle-2">
-                    {/* Retangle-3 = Card do perfil */}
                     <img src={logo} alt="Logo" width={300} />
-                    {/* <div className="Rectangle-3"> */}
-                    {/* <br />
-                        <div className="Ellipse-1"><br />
-                            <BsFillPersonFill size={40} />
-                        </div>
-                        <p className="Txt-1">
-                            Nome <br />
-                            Email <br />
-                            Cidade - Es <br />
-                            CVN
-                        </p> */}
-
-                    {/* </div> */}
                     <hr />
                     <Row>
                         <Col xs="1"></Col>
@@ -128,11 +114,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="name"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Nome
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="name"
                                         name="name"
@@ -145,11 +131,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="cpf"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     CPF
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="cpf"
                                         name="cpf"
@@ -162,11 +148,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="username"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Usuário
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="username"
                                         name="username"
@@ -179,11 +165,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="email"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Email
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="email"
                                         name="email"
@@ -196,11 +182,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="password"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Senha
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="password"
                                         name="password"
@@ -212,11 +198,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="cel"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Celular
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="cel"
                                         name="cel"
@@ -229,11 +215,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="address"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Endereço
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="address"
                                         name="address"
@@ -246,11 +232,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="city"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Cidade
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="city"
                                         name="city"
@@ -263,11 +249,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="state"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Estado
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="state"
                                         name="state"
@@ -280,11 +266,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="complement"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Complemento
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="complement"
                                         name="complement"
@@ -297,11 +283,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="zip_code"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     CEP
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="zip_code"
                                         name="zip_code"
@@ -314,11 +300,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="obs"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Observação
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="obs"
                                         name="obs"
@@ -331,11 +317,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="birth"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Nascimento
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="birth"
                                         name="birth"
@@ -348,11 +334,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="salary"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Salário
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="salary"
                                         name="salary"
@@ -366,11 +352,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="work_code"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Cód. de trab.
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="work_code"
                                         name="work_code"
@@ -383,11 +369,11 @@ class CreateAdvisor extends React.Component {
                             <FormGroup row>
                                 <Label
                                     for="cvm_code"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Cód. CVM
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="cvm_code"
                                         name="cvm_code"

@@ -47,26 +47,30 @@ class UpdateAdvisor extends React.Component {
     }
 
     handleSubmit(event) {
-        const result = JSON.stringify({
-            "name": this.state.name,
-            "salary": this.state.salary
-        });
-        var config = {
-            method: 'post',
-            url: 'http://localhost:5002/advisor/update/' + window.sessionStorage.getItem('adv_id'),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: result
-        };
-        axios(config)
-            .then(function (response) {
-                alert('Edição realizada!');
-                window.location.replace('http://localhost:5500/advisor/home');
-            })
-            .catch(function (error) {
-                alert(error);
+        if(this.state.name == '') {
+            alert('Nome em branco!\nFavor, preencher o campo.');
+        } else {
+            const result = JSON.stringify({
+                "name": this.state.name,
+                "salary": this.state.salary
             });
+            var config = {
+                method: 'post',
+                url: 'http://localhost:5002/advisor/update/' + window.sessionStorage.getItem('adv_id'),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: result
+            };
+            axios(config)
+                .then(function (response) {
+                    alert('Edição realizada!');
+                    window.location.replace('http://localhost:5500/advisor/home');
+                })
+                .catch(function (error) {
+                    alert(error);
+                });
+        }
         // alert(`JSON: ${result}`);
         event.preventDefault();
     }
@@ -109,7 +113,7 @@ class UpdateAdvisor extends React.Component {
                             {this.state.adv.name} <br />
                             {this.state.adv.email} <br />
                             {this.state.adv.city} - {this.state.adv.state} <br />
-                            {this.state.adv.cvm_code}
+                            CVM: {this.state.adv.cvm_code}
                         </p>
                     </div>
                     <hr />
@@ -138,7 +142,7 @@ class UpdateAdvisor extends React.Component {
                 <div className="Rectangle-1">
                     <div className='title'>
                         <img src={account_circle} alt="Profile Icon" />
-                        <h1>Editar perfil do assessor</h1>
+                        <h1>Editar assessor</h1>
                     </div>
                     <div className='main-form'>
                         <Form onSubmit={this.handleSubmit.bind(this)}>
@@ -185,7 +189,7 @@ class UpdateAdvisor extends React.Component {
 
                         </Form>
                         <div>
-                            <Button secondary style={{ backgroundColor: "#212121", borderColor: "#212121", color: "red" }} onClick={this.handleDelete}>
+                            <Button secondary style={{ backgroundColor: "#212121", borderColor: "#212121", color: "red", textAlign11: "left" }} onClick={this.handleDelete}>
                                 Apagar perfil
                             </Button>
                         </div>

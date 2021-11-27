@@ -30,12 +30,12 @@ class GetClient extends React.Component {
     
             axios(config)
                 .then(function (response) { 
-                    alert(JSON.stringify(response));
                     self.setState({ delRes: JSON.stringify(response) }); 
                 }) 
                 .catch(function (error) { self.setState({ delRes: error }); });
-            
-            if(this.state.delRes == '1') {
+                
+                if(this.state.delRes == '1') {
+                alert('Usuário deletado!');
                 window.location.replace('http://localhost:5500/advisor/home');
             }
         }
@@ -79,8 +79,8 @@ class GetClient extends React.Component {
                                         <Col className="space-between">
                                             <div> <BsPersonFill size={40} />   </div>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <div className="card-text"> <b>{e.name.toUpperCase()}</b> <br /> {e.email} Id:{e.id} </div>
-                                            <div className="card-icons-but">
+                                            <div className="card-text"> <b>{e.name.toUpperCase()}</b> <br /> {e.email} </div>
+                                            <div>
                                                 <Button className="white" onClick={() => this.deleteItem(e.id)}><BsFillTrashFill size={30} color="black" /></Button>
                                                 {/* BsThreeDotsVertical */}
                                                 &nbsp;&nbsp;

@@ -1,36 +1,30 @@
 import React from "react";
-import './create.css';
-
-import account_circle from "../../assets/ic_account_circle_white_48dp.png";
-
-import { Form, FormGroup, Label, Col, Input, Row, Button } from 'reactstrap';
-import { BsFillHouseFill, BsBoxArrowInLeft } from "react-icons/bs";
+import "../advisor/home.css";
+import { Row, Col, Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { BsBoxArrowInLeft, BsCurrencyDollar, BsFillHouseFill } from "react-icons/bs";
+import GetPortifolios from "../../components/getPortifolios";
 import axios from "axios";
-import { withRouter } from 'react-router-dom';
 
-class UpdateClient extends React.Component {
+export default class PortifolioCreate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             name: '',
-            cpf: '',
-            username: '',
-            id: this.props.location.state.id,
+            amount: 1,
+            status: 1,
+            adv_id: window.sessionStorage.getItem('adv_id'),
             adv: '',
+            products: []
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     componentDidMount() {
-        if(window.sessionStorage.getItem('adv_id') == null) {
-            alert("Parece que sua sessão não está ativa");
-            window.location.replace('http://localhost:5500');
-        }
         var self = this;
         var config = {
             method: 'get',
-            url: 'http://localhost:5002/advisor/' +  window.sessionStorage.getItem('adv_id'),
+            url: 'http://localhost:5002/advisor/' + window.sessionStorage.getItem('adv_id'),
             headers: {}
         };
         axios(config)
@@ -54,21 +48,28 @@ class UpdateClient extends React.Component {
     }
 
     handleSubmit(event) {
-        if(this.state.name == '' || this.state.cpf == '' || this.state.username == '') {
+        if (this.state.name == '' || this.state.amount == 1) {
             alert("Todos os campos devem ser preenchidos!");
         } else {
-            const result = { "name": this.state.name, "cpf": this.state.cpf, "username": this.state.username };
+            const result = {
+                "name": this.state.name,
+                "amount": this.state.amount,
+                "status": 1,
+                "advisor_id": this.state.adv_id,
+                "products": []
+            };
+
             var _data = JSON.stringify(result);
             var config = {
                 method: 'post',
-                url: 'http://localhost:5001/client/update/' + this.state.id,
+                url: 'http://localhost:5004/portfolio/create',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 data: _data
             };
             axios(config)
-                .then(function (res) { alert('Usuário atualizado!'); window.location.replace('http://localhost:5500/advisor/home'); })
+                .then(function (res) { window.sessionStorage.setItem('portifolio', '1'); alert('Portifólio criado!'); window.location.replace('http://localhost:5500/portifolio/home'); })
                 .catch(function (error) { alert(error); });
         }
         event.preventDefault();
@@ -77,6 +78,7 @@ class UpdateClient extends React.Component {
     render() {
         return (
             <>
+                {/* Retangle-2 = Sidebar */}
                 <div className="Rectangle-2">
                     {/* Retangle-3 = Card do perfil */}
                     <div className="Rectangle-3">
@@ -104,6 +106,17 @@ class UpdateClient extends React.Component {
                     <Row>
                         <Col xs="1"></Col>
                         <Col>
+                            <a href="./home">
+                                {/* Rota para página de criar portifólio */}
+                                <div className="side-bar"><BsCurrencyDollar size={40} />
+                                    &nbsp;&nbsp;&nbsp;Portifólio</div>
+                            </a>
+                        </Col>
+                    </Row>
+                    <hr />
+                    <Row>
+                        <Col xs="1"></Col>
+                        <Col>
                             <a href="../">
                                 <div className="side-bar"><BsBoxArrowInLeft size={40} />
                                     &nbsp;&nbsp;&nbsp;Logout</div>
@@ -114,24 +127,25 @@ class UpdateClient extends React.Component {
                 </div>
 
                 <div className="Rectangle-1">
-                    <div className='title'>
-                        <img src={account_circle} alt="Profile Icon" />
-                        <h1>Editar cliente</h1>
-                    </div>
-                    <div className='main-form'>
+                    <br />
+                    <br />
+                    <h1>PORTIFÓLIOS</h1>
+                    <br />
+
+                    <div className="main-form">
                         <Form onSubmit={this.handleSubmit.bind(this)}>
                             <FormGroup row>
                                 <Label
                                     for="name"
-                                    sm={2}
+                                    sm={3}
                                 >
                                     Nome
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
                                         id="name"
                                         name="name"
-                                        placeholder="Seu nome"
+                                        placeholder="Nome do portifólio"
                                         type="text"
                                         onChange={this.handleInputChange.bind(this)
                                         }
@@ -140,54 +154,34 @@ class UpdateClient extends React.Component {
                             </FormGroup>
                             <FormGroup row>
                                 <Label
-                                    for="cpf"
-                                    sm={2}
+                                    for="amount"
+                                    sm={3}
                                 >
-                                    CPF
+                                    Valor esperado
                                 </Label>
-                                <Col sm={10}>
+                                <Col sm={9}>
                                     <Input
-                                        id="cpf"
-                                        name="cpf"
-                                        placeholder="000.000.000-00"
-                                        type="text"
-                                        onChange={this.handleInputChange.bind(this)}
+                                        id="amount"
+                                        name="amount"
+                                        placeholder="0.0"
+                                        type="number"
+                                        step={0.01}
+                                        onChange={this.handleInputChange.bind(this)
+                                        }
                                     />
                                 </Col>
                             </FormGroup>
-                            <FormGroup row>
-                                <Label
-                                    for="username"
-                                    sm={2}
-                                >
-                                    Usuário
-                                </Label>
-                                <Col sm={10}>
-                                    <Input
-                                        id="username"
-                                        name="username"
-                                        placeholder="Nome de usuário"
-                                        type="text"
-                                        onChange={this.handleInputChange.bind(this)}
-                                    />
-                                </Col>
-                            </FormGroup>
+
                             <div className="cb">
                                 <Button secondary>
-                                    <input type="submit" value="Enviar" style={{backgroundColor: "transparent", color: "white", border: "none"}}/>
+                                    Enviar
                                 </Button>
-
                             </div>
-
                         </Form>
                     </div>
-
                 </div>
-                {/* <p>{res}</p> */}
 
             </>
         );
     }
 }
-
-export default withRouter(UpdateClient);

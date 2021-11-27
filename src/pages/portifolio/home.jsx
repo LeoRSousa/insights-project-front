@@ -18,7 +18,7 @@ export default class PortifolioHome extends React.Component {
         var self = this;
         var config = {
             method: 'get',
-            url: 'http://localhost:5002/advisor/1',
+            url: 'http://localhost:5002/advisor/' + window.sessionStorage.getItem('adv_id'),
             headers: {}
         };
         axios(config)
@@ -31,6 +31,16 @@ export default class PortifolioHome extends React.Component {
     };
 
     render() {
+        // let vazio;
+        // console.log("Port. vazio? " + window.sessionStorage.getItem('portifolio'))
+        // if (window.sessionStorage.getItem('portifolio') == '0') {
+        //     vazio = <div style={{ color: "white" }}>
+        //         <h2>Nada por aqui!</h2>
+        //         <a href="./create">Adiconar portifólio?...</a>
+        //     </div>
+        // } else {
+        //     vazio = <span></span>
+        // }
         return (
             <>
                 {/* Retangle-2 = Sidebar */}
@@ -44,7 +54,7 @@ export default class PortifolioHome extends React.Component {
                             {this.state.adv.name} <br />
                             {this.state.adv.email} <br />
                             {this.state.adv.city} - {this.state.adv.state} <br />
-                            {this.state.adv.cvm_code}
+                            CVM: {this.state.adv.cvm_code}
                         </p>
                     </div>
                     <hr />
@@ -61,8 +71,8 @@ export default class PortifolioHome extends React.Component {
                     <Row>
                         <Col xs="1"></Col>
                         <Col>
-                            <a href=""> 
-                            {/* Rota para página de criar portifólio */}
+                            <a href="./create">
+                                {/* Rota para página de criar portifólio */}
                                 <div className="side-bar"><BsCurrencyDollar size={40} />
                                     &nbsp;&nbsp;&nbsp;Adicionar Portifólio</div>
                             </a>
@@ -87,6 +97,8 @@ export default class PortifolioHome extends React.Component {
                     <h1>PORTIFÓLIOS</h1>
                     <br />
                     <GetPortifolios />
+                    {/* {vazio} */}
+
                 </div>
 
             </>

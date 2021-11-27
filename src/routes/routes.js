@@ -9,6 +9,7 @@ import CreateAdvisor from "../pages/advisor/create";
 import UpdateAdvisor from "../pages/advisor/update";
 import AssetsHome from "../pages/Assets/home";
 import PortifolioHome from "../pages/portifolio/home";
+import PortifolioCreate from "../pages/portifolio/create";
 
 const Routes = () => {
     return (
@@ -21,6 +22,7 @@ const Routes = () => {
             < Route component={UpdateAdvisor} path="/advisor/update" />
             < Route component={AssetsHome} path="/assets/home" />
             < Route component={PortifolioHome} path="/portifolio/home" />
+            < Route component={PortifolioCreate} path="/portifolio/create" />
         </BrowserRouter>
     )
 }
