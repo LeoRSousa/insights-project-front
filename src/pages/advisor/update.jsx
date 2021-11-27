@@ -138,7 +138,7 @@ class UpdateAdvisor extends React.Component {
                 <div className="Rectangle-1">
                     <div className='title'>
                         <img src={account_circle} alt="Profile Icon" />
-                        <h1>Editar perfil</h1>
+                        <h1>Editar perfil do assessor</h1>
                     </div>
                     <div className='main-form'>
                         <Form onSubmit={this.handleSubmit.bind(this)}>

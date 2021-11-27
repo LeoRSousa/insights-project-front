@@ -20,22 +20,24 @@ class GetClient extends React.Component {
 
     deleteItem(elem) {
         const self = this;
-        console.log(elem);
-        var config = {
-            method: 'get',
-            url: 'http://localhost:5001/client/delete/' + elem,
-            headers: {}
-        };
-
-        axios(config)
-            .then(function (response) { 
-                alert(JSON.stringify(response));
-                self.setState({ delRes: JSON.stringify(response) }); 
-            }) 
-            .catch(function (error) { self.setState({ delRes: error }); });
-        
-        if(this.state.delRes == '1') {
-            window.location.replace('http://localhost:5500/advisor/home');
+        if(window.confirm('Tem certeza que deseja deletar o usuário?')) {
+            console.log(elem);
+            var config = {
+                method: 'get',
+                url: 'http://localhost:5001/client/delete/' + elem,
+                headers: {}
+            };
+    
+            axios(config)
+                .then(function (response) { 
+                    alert(JSON.stringify(response));
+                    self.setState({ delRes: JSON.stringify(response) }); 
+                }) 
+                .catch(function (error) { self.setState({ delRes: error }); });
+            
+            if(this.state.delRes == '1') {
+                window.location.replace('http://localhost:5500/advisor/home');
+            }
         }
     }
 

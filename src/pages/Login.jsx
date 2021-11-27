@@ -71,10 +71,12 @@ class Login extends React.Component {
 
     axios(config)
       .then(function (response) {
+        console.log("Console.log  " + response.data)
         if (response.data == "User not found") {
           alert("Login inválido.\nConfira suas credenciais!");
         } else {
           var id = response.data.id;
+          console.log("ID: " + id);
           window.sessionStorage.setItem('adv_id', id);
           // console.log(sessionStorage.getItem('adv_id'));
           console.log(self.state.adv_ids.includes(id))
