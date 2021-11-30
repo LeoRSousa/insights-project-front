@@ -147,6 +147,7 @@ export default function GetPortifolios() {
         })
 
         if (formValues) {
+            console.log("Dt1: " + formValues[0] + " Dt2: " + formValues[1])
             var _link = "http://localhost:8501/?portfolio_id=" + id + "&start_date=" + formValues[0] + "&end_date=" + formValues[1];
             console.log(_link);
             // MySwal.fire()
