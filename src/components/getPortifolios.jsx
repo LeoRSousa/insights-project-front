@@ -13,9 +13,8 @@ import withReactContent from 'sweetalert2-react-content';
 export default function GetPortifolios() {
 
     const [res, setRes] = useState([]);
-    const [vazio, setVazio] = useState(<div></div>);
-    const [open, setOpen] = useState(false);
     const [clients, setClients] = useState([]);
+    const [clientsName, setClientsName] = useState([]);
     const MySwal = withReactContent(Swal);
 
     useEffect(() => {
@@ -34,14 +33,18 @@ export default function GetPortifolios() {
             setRes(data.portfolios);
 
             let response = await axios.get('http://localhost:5001/clients')
-            let _clients = [];
+            let _clientsId = [];
+            let _clientsName = [];
+
             response.data.map((item) => {
                 if (item.advisor_id == window.sessionStorage.getItem('adv_id')) {
-                    _clients.push(item.id)
+                    _clientsId.push(item.id)
+                    _clientsName.push(item.name)
                 }
             });
-            setClients(_clients)
-            console.log("Clientes ids: " + clients)
+            setClients(_clientsId)
+            setClientsName(_clientsName)
+            // console.log("Clientes ids: " + clients)
         }
 
         req();
@@ -50,15 +53,16 @@ export default function GetPortifolios() {
     // res.map((e) => e.products.length == 0 ? console.log('true') : console.log('false'));
     // console.log("Leng.: " + res.length);
 
-    const _modal = async (e) => {
+    const _modal = async (e, id) => {
+        console.log("ElemID: " + id);
         //https://sweetalert2.github.io/#input-types
         const options = new Map();
 
         clients.forEach((elem) => options.set(elem, elem));
 
         let optString = '';
-        clients.forEach((elem) => optString +=
-            '<input id="'+ elem +'" type="checkbox" value="' + elem +'" class="swal-input'+ elem +'"> <label for="'+ elem + '">'+ elem +'</label> '
+        clients.forEach((elem, index) => optString +=
+            '<input id="' + elem + '" type="checkbox" value="' + elem + '" class="swal-input' + elem + '"> <label for="' + elem + '">' + clientsName[index] + '</label><br /> '
         )
         console.log("OPT" + optString)
 
@@ -75,61 +79,78 @@ export default function GetPortifolios() {
         console.log("OPT2: " + typeof (inputOptions))
 
         //Multiple checkboxes: https://stackoverflow.com/questions/55386918/sweet-alert-2-multiple-checkbox
-        /*
-            title: 'Multiple checkbox inputs',
-            html: `
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkbox1">
-                    <label class="form-check-label" for="checkbox1">
-                        checkbox1
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkbox2">
-                    <label class="form-check-label" for="checkbox2">
-                        checkbox2
-                    </label>
-                </div>
-            `,
-            focusConfirm: false,
-            preConfirm: () => {
-                console.log('Is checkbox1 checked:' + document.getElementById('checkbox1').checked);
-                console.log('Is checkbox2 checked:' + document.getElementById('checkbox2').checked);
-            }
-        */
-        const { value: opt } = await MySwal.fire({
-            // title: 'Selecione os ids',
-            // input: 'radio',
-            // inputOptions: inputOptions, //Can be a Map or a plain object, with keys that represent option values and values that represent option text.
-            // inputValidator: (value) => {
-            //     if (!value) {
-            //         return 'You need to choose something!'
-            //     }
-            // }
 
-            title: 'Multiple inputs',
+        const { value: opt } = await MySwal.fire({
+            title: 'Recomende para: ',
             html: optString,
-                // '<input id="swal-input1" type="checkbox" value="1" class="swal2-input"> <label for="swal-input1">Opt 1</label>' +
-                // '<input id="swal-input2" type="checkbox" value="2" class="swal2-input"> <label for="swal-input2">Opt 2</label>',
+            // '<input id="swal-input1" type="checkbox" value="1" class="swal2-input"> <label for="swal-input1">Opt 1</label>' +
+            // '<input id="swal-input2" type="checkbox" value="2" class="swal2-input"> <label for="swal-input2">Opt 2</label>',
             focusConfirm: false,
             preConfirm: () => {
                 let result = []
                 //Fazer a verificação pq tá voltando todos
-                clients.forEach((elem) =>
-                    result.push(document.getElementById(elem).value),
+                clients.forEach((elem) => {
+                    if (document.getElementById(elem).checked) {
+                        result.push(parseInt(document.getElementById(elem).value))
+                    }
+                }
                 )
                 return result
-                // return [
-                //     //for each o que?
-                //     document.getElementById('swal-input1').value,
-                //     document.getElementById('swal-input2').value
-                // ]
             }
         })
 
         if (opt) {
             // MySwal.fire({ html: `You selected: ${opt}` })
-            MySwal.fire(JSON.stringify(opt))
+            // MySwal.fire(JSON.stringify(opt))
+            var data = JSON.stringify({
+                "portfolio_id": id,
+                "client_ids": opt
+            });
+
+            var config = {
+                method: 'post',
+                url: 'http://localhost:5004/portfolio/recommend',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            };
+
+            axios(config)
+                .then(function (response) {
+                    if (response.data == "Success") {
+                        MySwal.fire("Sucesso");
+                    } else {
+                        MySwal.fire(JSON.stringify(response.data));
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+        }
+    }
+
+    const _modal2 = async (e, id) => {
+        const { value: formValues } = await MySwal.fire({
+            title: 'Multiple inputs',
+            html:
+                '<input type="date" id="swal-input1" class="swal2-input">' +
+                '<input type="date" id="swal-input2" class="swal2-input">',
+            focusConfirm: false,
+            preConfirm: () => {
+                return [
+                    document.getElementById('swal-input1').value,
+                    document.getElementById('swal-input2').value
+                ]
+            }
+        })
+
+        if (formValues) {
+            var _link = "http://localhost:8501/?portfolio_id=" + id + "&start_date=" + formValues[0] + "&end_date=" + formValues[1];
+            console.log(_link);
+            // MySwal.fire()
+            window.open(_link, '_blank');
         }
     }
 
@@ -142,7 +163,7 @@ export default function GetPortifolios() {
                         <Col className="space-between">
                             <div> <BsPersonFill size={40} />   </div>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <div className="card-text" style={{ maxWidth: "20vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}> <b>{e.name.toUpperCase()} {e.id}</b><br /> <b>Ativos:</b> {e.products.length == 0 ? 'Nenhum ativo' : e.products.map((i) => i.id + " | ")}</div>
+                            <div className="card-text" style={{ maxWidth: "20vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}> <b>{e.name.toUpperCase()}</b><br /> <b>Ativos:</b> {e.products.length == 0 ? 'Nenhum ativo' : e.products.map((i) => i.id + " | ")}</div>
                             <div className="card-icons-but">
                                 {/* BOTÃO RECOMENDAR */}
                                 <div>
@@ -150,9 +171,9 @@ export default function GetPortifolios() {
                                         className="white"
                                         style={{ backgroundColor: "transparent", margin: "none", borderColor: "transparent" }}
                                         onClick={
-                                            (e) => {
-                                                _modal(e);
-                                                e.preventDefault();
+                                            (elem) => {
+                                                _modal(elem, e.id);
+                                                elem.preventDefault();
                                             }
                                         }>
                                         <BsPatchPlusFill size={30} color="black" />
@@ -162,7 +183,15 @@ export default function GetPortifolios() {
                                 </div>
                                 &nbsp;&nbsp;
                                 {/* BOTÃO BACKTEST */}
-                                <Button className="white" style={{ backgroundColor: "transparent", margin: "none", borderColor: "transparent" }}>
+                                <Button
+                                    className="white"
+                                    style={{ backgroundColor: "transparent", margin: "none", borderColor: "transparent" }}
+                                    onClick={
+                                        (elem) => {
+                                            _modal2(elem, e.id);
+                                            elem.preventDefault();
+                                        }
+                                    }>
                                     <BsBarChartFill size={30} color="black" />
                                     <p style={{ color: "black", margin: "0" }}>Backtest</p>
                                 </Button>

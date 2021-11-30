@@ -80,6 +80,7 @@ class GetClient extends React.Component {
                                             <div> <BsPersonFill size={40} />   </div>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <div className="card-text"> <b>{e.name.toUpperCase()}</b> <br /> {e.email} </div>
+                                            <span></span>
                                             <div>
                                                 <Button className="white" onClick={() => this.deleteItem(e.id)}><BsFillTrashFill size={30} color="black" /></Button>
                                                 {/* BsThreeDotsVertical */}
