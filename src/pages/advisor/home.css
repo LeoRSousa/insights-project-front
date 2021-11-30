@@ -88,7 +88,7 @@ rgba(33,33,33,255) */
 }
 
 .space-between>div:nth-child(3) {
-    margin-left: 48%;
+    margin-left: 40vw;
     position: absolute;
     align-self: center;
 }

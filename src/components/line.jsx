@@ -147,7 +147,7 @@ const LineChart = ({ closes, dates, infos, company, portifolio }) => {
                                 <Input
                                     id="proportions"
                                     name="proportions"
-                                    placeholder="Proporção(%)"
+                                    placeholder="0-100(%)"
                                     type="number"
                                     step={0.1}
                                     min={0.1}

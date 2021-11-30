@@ -11,7 +11,16 @@ class UpdateAdvisor extends React.Component {
         super(props);
         this.state = {
             name: '',
-            salary: 12341.42,
+            address: "",
+            birth: "",
+            cel: "",
+            city: "",
+            complement: "",
+            email: "",
+            password: "",
+            state: "",
+            username: "",
+            zip_code: "",
             adv: '',
         };
 
@@ -27,12 +36,26 @@ class UpdateAdvisor extends React.Component {
         };
         axios(config)
             .then(function (response) {
-                self.setState({ adv: response.data })
+                self.setState({
+                    adv: response.data,
+                    name: response.data.name,
+                    address: response.data.address,
+                    birth: response.data.birth,
+                    cel: response.data.cel,
+                    city: response.data.city,
+                    complement: response.data.complement,
+                    email: response.data.email,
+                    password: response.data.password,
+                    state: response.data.state,
+                    username: response.data.username,
+                    zip_code: response.data.zip_code,
+                })
             })
             .catch(function (error) {
                 console.log(error);
             });
-        // this.state.name = JSON.stringify(res.name);
+
+
     };
 
     handleInputChange(event) {
@@ -40,37 +63,45 @@ class UpdateAdvisor extends React.Component {
         const value = target.value;
         const name = target.name;
 
-        this.setState({
-            [name]: value
-        });
+        if (value != "") {
+            this.setState({
+                [name]: value
+            });
+        }
 
     }
 
     handleSubmit(event) {
-        if(this.state.name == '') {
-            alert('Nome em branco!\nFavor, preencher o campo.');
-        } else {
-            const result = JSON.stringify({
-                "name": this.state.name,
-                "salary": this.state.salary
+        const result = JSON.stringify({
+            "name": this.state.name,
+            "address": this.state.address,
+            "birth": this.state.birth,
+            "cel": this.state.cel,
+            "city": this.state.city,
+            "complement": this.state.complement,
+            "email": this.state.email,
+            "password": this.state.password,
+            "state": this.state.state,
+            "username": this.state.username,
+            "zip_code": this.state.zip_code,
+
+        });
+        var config = {
+            method: 'post',
+            url: 'http://localhost:5002/advisor/update/' + window.sessionStorage.getItem('adv_id'),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: result
+        };
+        axios(config)
+            .then(function (response) {
+                alert('Edição realizada!');
+                window.location.replace('http://localhost:5500/advisor/home');
+            })
+            .catch(function (error) {
+                alert(error);
             });
-            var config = {
-                method: 'post',
-                url: 'http://localhost:5002/advisor/update/' + window.sessionStorage.getItem('adv_id'),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: result
-            };
-            axios(config)
-                .then(function (response) {
-                    alert('Edição realizada!');
-                    window.location.replace('http://localhost:5500/advisor/home');
-                })
-                .catch(function (error) {
-                    alert(error);
-                });
-        }
         // alert(`JSON: ${result}`);
         event.preventDefault();
     }
@@ -157,7 +188,7 @@ class UpdateAdvisor extends React.Component {
                                     <Input
                                         id="name"
                                         name="name"
-                                        placeholder="Seu nome"
+                                        placeholder={this.state.name}
                                         type="text"
                                         onChange={this.handleInputChange.bind(this)}
                                     />
@@ -165,16 +196,169 @@ class UpdateAdvisor extends React.Component {
                             </FormGroup>
                             <FormGroup row>
                                 <Label
-                                    for="salary"
+                                    for="email"
                                     sm={2}
                                 >
-                                    Salário
+                                    Email
                                 </Label>
                                 <Col sm={10}>
                                     <Input
-                                        id="salary"
-                                        name="salary"
-                                        placeholder="1234.56"
+                                        id="email"
+                                        name="email"
+                                        placeholder={this.state.email}
+                                        type="text"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="password"
+                                    sm={2}
+                                >
+                                    Senha
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="password"
+                                        name="password"
+                                        placeholder="****"
+                                        type="password"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="username"
+                                    sm={2}
+                                >
+                                    Usuário
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="username"
+                                        name="username"
+                                        placeholder={this.state.username}
+                                        type="text"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="birth"
+                                    sm={2}
+                                >
+                                    Nascimento
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="birth"
+                                        name="birth"
+                                        placeholder={this.state.birth}
+                                        type="date"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="cel"
+                                    sm={2}
+                                >
+                                    Celular
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="cel"
+                                        name="cel"
+                                        placeholder={this.state.cel}
+                                        type="text"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="address"
+                                    sm={2}
+                                >
+                                    Endereço
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="address"
+                                        name="address"
+                                        placeholder={this.state.address}
+                                        type="text"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="city"
+                                    sm={2}
+                                >
+                                    Cidade
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="city"
+                                        name="city"
+                                        placeholder={this.state.city}
+                                        type="text"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="complement"
+                                    sm={2}
+                                >
+                                    Complemento
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="complement"
+                                        name="complement"
+                                        placeholder={this.state.complement}
+                                        type="text"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="state"
+                                    sm={2}
+                                >
+                                    Estado
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="state"
+                                        name="state"
+                                        placeholder={this.state.state}
+                                        type="text"
+                                        onChange={this.handleInputChange.bind(this)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label
+                                    for="zip_code"
+                                    sm={2}
+                                >
+                                    CEP
+                                </Label>
+                                <Col sm={10}>
+                                    <Input
+                                        id="zip_code"
+                                        name="zip_code"
+                                        placeholder={this.state.zip_code}
                                         type="text"
                                         onChange={this.handleInputChange.bind(this)}
                                     />

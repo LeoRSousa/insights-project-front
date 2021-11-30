@@ -83,6 +83,7 @@ export default function GetPortifolios() {
         const { value: opt } = await MySwal.fire({
             title: 'Recomende para: ',
             html: optString,
+            confirmButtonColor: "#212121",
             // '<input id="swal-input1" type="checkbox" value="1" class="swal2-input"> <label for="swal-input1">Opt 1</label>' +
             // '<input id="swal-input2" type="checkbox" value="2" class="swal2-input"> <label for="swal-input2">Opt 2</label>',
             focusConfirm: false,
@@ -133,11 +134,13 @@ export default function GetPortifolios() {
 
     const _modal2 = async (e, id) => {
         const { value: formValues } = await MySwal.fire({
-            title: 'Multiple inputs',
+            title: 'Período',
             html:
+                'Data inicial:' +
                 '<input type="date" id="swal-input1" class="swal2-input">' +
-                '<input type="date" id="swal-input2" class="swal2-input">',
+                'Data final:' + '<input type="date" id="swal-input2" class="swal2-input">',
             focusConfirm: false,
+            confirmButtonColor: "#212121",
             preConfirm: () => {
                 return [
                     document.getElementById('swal-input1').value,

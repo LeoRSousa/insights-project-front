@@ -236,23 +236,6 @@ class CreateClient extends React.Component {
                             </FormGroup>
                             <FormGroup row>
                                 <Label
-                                    for="suitability"
-                                    sm={2}
-                                >
-                                    Suitability
-                                </Label>
-                                <Col sm={10}>
-                                    <Input
-                                        id="suitability"
-                                        name="suitability"
-                                        placeholder="suitability"
-                                        type="text"
-                                        onChange={this.handleInputChange.bind(this)}
-                                    />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label
                                     for="cel"
                                     sm={2}
                                 >
