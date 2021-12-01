@@ -15,6 +15,7 @@ export default function GetPortifolios() {
     const [res, setRes] = useState([]);
     const [clients, setClients] = useState([]);
     const [clientsName, setClientsName] = useState([]);
+    const [companies, setCompanies] = useState([]);
     const MySwal = withReactContent(Swal);
 
     useEffect(() => {
@@ -42,7 +43,27 @@ export default function GetPortifolios() {
                     _clientsName.push(item.name)
                 }
             });
-            setClients(_clientsId)
+
+            //Request da lista das siglas das empresas
+            var config = {
+                method: 'get',
+                url: 'http://localhost:5003/assets',
+                headers: {}
+            };
+            let _companies;
+            axios(config)
+                .then(function (response) {
+                    _companies = response.data;
+                    // console.log(_companies);
+                    //Não é a melhor ideia. Resultado :  "[\"JSLG-DEB61L0.SA\"", "\"TPIS3.SA\""
+                    setCompanies(_companies);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            // console.log("companies: " + companies);
+
+            setClients(_clientsId);
             setClientsName(_clientsName)
             // console.log("Clientes ids: " + clients)
         }
@@ -73,8 +94,8 @@ export default function GetPortifolios() {
 
         const inputOptions = options;
         // {
-        //     1: "1",
-        //     3: "3"
+        // 1: "1",
+        // 3: "3"
         // }; 
         console.log("OPT2: " + typeof (inputOptions))
 
@@ -87,6 +108,7 @@ export default function GetPortifolios() {
             // '<input id="swal-input1" type="checkbox" value="1" class="swal2-input"> <label for="swal-input1">Opt 1</label>' +
             // '<input id="swal-input2" type="checkbox" value="2" class="swal2-input"> <label for="swal-input2">Opt 2</label>',
             focusConfirm: false,
+            showCancelButton: true,
             preConfirm: () => {
                 let result = []
                 //Fazer a verificação pq tá voltando todos
@@ -140,6 +162,7 @@ export default function GetPortifolios() {
                 '<input type="date" id="swal-input1" class="swal2-input">' +
                 'Data final:' + '<input type="date" id="swal-input2" class="swal2-input">',
             focusConfirm: false,
+            showCancelButton: true,
             confirmButtonColor: "#212121",
             preConfirm: () => {
                 return [
@@ -155,6 +178,27 @@ export default function GetPortifolios() {
             console.log(_link);
             // MySwal.fire()
             window.open(_link, '_blank');
+        }
+    }
+
+    const _modal3 = async (e, id) => {
+        // console.log(companies);
+        const options = new Map();
+
+        // var sortCompanies = companies.sort();
+        companies.sort().forEach((elem) => options.set(elem, elem));
+
+        const { value: company } = await MySwal.fire({
+            title: 'Selecione uma empresa',
+            input: 'select',
+            inputOptions: options,
+            inputPlaceholder: 'Empresas',
+            showCancelButton: true,
+            confirmButtonColor: "#212121",
+        })
+
+        if (company) {
+            MySwal.fire(`You selected: ${company}`)
         }
     }
 
@@ -201,15 +245,23 @@ export default function GetPortifolios() {
                                 </Button>
                                 {/* BOTÃO ADICIONAR ATIVOS */}
                                 &nbsp;&nbsp;
-                                <Link to={{
+                                {/* <Link to={{
                                     pathname: "../assets/home",
                                     state: { pf_id: parseInt(e.id) }
-                                }} >
-                                    <Button className="white" style={{ backgroundColor: "transparent", borderColor: "transparent" }}>
-                                        <BsBagPlusFill size={30} color="black" />
-                                        <p style={{ color: "black", margin: "0", wordBreak: "keep-all", whiteSpace: "nowrap" }}>Adicionar Ativos</p>
-                                    </Button>
-                                </Link>
+                                }} > */}
+                                <Button
+                                    className="white"
+                                    style={{ backgroundColor: "transparent", borderColor: "transparent" }}
+                                    onClick={
+                                        (elem) => {
+                                            _modal3(elem, e.id);
+                                            elem.preventDefault();
+                                        }
+                                    }>
+                                    <BsBagPlusFill size={30} color="black" />
+                                    <p style={{ color: "black", margin: "0", wordBreak: "keep-all", whiteSpace: "nowrap" }}>Adicionar Ativos</p>
+                                </Button>
+                                {/* </Link> */}
                             </div>
                         </Col>
                     </a>
