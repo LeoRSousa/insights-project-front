@@ -235,7 +235,7 @@ export default class GetPortifolios extends React.Component {
             //As coisas aqui em baixo serão executadas antes da requisição, por isso vai vazio
             console.log("FORA AXIOS")
             var htmlStr = ''
-            htmlStr += '<Link to={{pathname: "../assets/home", state: { pf_id: parseInt(' + id + '), company: ' + company + ', info: ' + self.state.info + ', dates: ' + self.state.dates + ', closes: ' + self.state.values + ' }}} > ' +
+            htmlStr += '<Link to={{pathname: "../assets/home", state: { pf_id: parseInt(' + id + '), company: ' + company + ', info: ' + self.state.info + ', dates: [' + self.state.dates + '], closes: [' + self.state.values + '] }}} > ' +
                 '<Button secondary>Ok</Button>' +
                 '</Link>'
 
@@ -243,12 +243,16 @@ export default class GetPortifolios extends React.Component {
             //https://stackoverflow.com/questions/29244731/react-router-how-to-manually-invoke-link
             //react-router-dom inside javascript function
             //react-router-dom inside sweetalert
+            //https://qastack.com.br/programming/44121069/how-to-pass-params-with-history-push-link-redirect-in-react-router-v4
             console.log(htmlStr)
             self.state.MySwal.fire({
                 title: `Empresa escolhida: ${company}\n`,
                 showConfirmButton: false,
                 html: htmlStr,
-                onClick: ,
+                // onClick: self.props.history.push(
+                    // pathname: '../assets/home',
+                    // state: { pf_id: parseInt(id), company: company, info: self.state.info, dates: self.state.dates, closes: self.state.values }
+                //),
             })
         }
     }
