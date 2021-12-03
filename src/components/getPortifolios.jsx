@@ -10,80 +10,83 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 
-export default function GetPortifolios() {
+export default class GetPortifolios extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            res: [],
+            clients: [],
+            clientsName: [],
+            companies: [],
+            values: [],
+            dates: [],
+            info: {},
+            MySwal: withReactContent(Swal)
+        };
 
-    const [res, setRes] = useState([]);
-    const [clients, setClients] = useState([]);
-    const [clientsName, setClientsName] = useState([]);
-    const [companies, setCompanies] = useState([]);
-    const MySwal = withReactContent(Swal);
+        // this.handleInputChange = this.handleInputChange.bind(this);
+    }
 
-    useEffect(() => {
-        const req = async () => {
-
-            let result = await axios.get('http://localhost:5004/portfolios/advisor/' + window.sessionStorage.getItem('adv_id'),
-                {
-                    headers: {
-                        'Access-Control-Allow-Origin': '*'
-                    }
-                });
-
-            let data = result.data;
-            console.log(data);
-            console.log(data.portfolios);
-            setRes(data.portfolios);
-
-            let response = await axios.get('http://localhost:5001/clients')
-            let _clientsId = [];
-            let _clientsName = [];
-
-            response.data.map((item) => {
-                if (item.advisor_id == window.sessionStorage.getItem('adv_id')) {
-                    _clientsId.push(item.id)
-                    _clientsName.push(item.name)
+    async componentDidMount() {
+        const self = this
+        let result = await axios.get('http://localhost:5004/portfolios/advisor/' + window.sessionStorage.getItem('adv_id'),
+            {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
                 }
             });
 
-            //Request da lista das siglas das empresas
-            var config = {
-                method: 'get',
-                url: 'http://localhost:5003/assets',
-                headers: {}
-            };
-            let _companies;
-            axios(config)
-                .then(function (response) {
-                    _companies = response.data;
-                    // console.log(_companies);
-                    //Não é a melhor ideia. Resultado :  "[\"JSLG-DEB61L0.SA\"", "\"TPIS3.SA\""
-                    setCompanies(_companies);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            // console.log("companies: " + companies);
+        let data = result.data;
+        console.log(data);
+        console.log(data.portfolios);
+        self.setState({ res: data.portfolios })
 
-            setClients(_clientsId);
-            setClientsName(_clientsName)
-            // console.log("Clientes ids: " + clients)
-        }
+        let response = await axios.get('http://localhost:5001/clients')
+        let _clientsId = [];
+        let _clientsName = [];
 
-        req();
-    }, []);
+        response.data.map((item) => {
+            if (item.advisor_id == window.sessionStorage.getItem('adv_id')) {
+                _clientsId.push(item.id)
+                _clientsName.push(item.name)
+            }
+        });
+
+        //Request da lista das siglas das empresas
+        var config = {
+            method: 'get',
+            url: 'http://localhost:5003/assets',
+            headers: {}
+        };
+        let _companies;
+        axios(config)
+            .then(function (response) {
+                _companies = response.data;
+                self.setState({ companies: _companies })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        // console.log("companies: " + companies);
+
+        self.setState({ clients: _clientsId })
+        self.setState({ clientsName: _clientsName })
+        // console.log("Clientes ids: " + clients)
+    };
 
     // res.map((e) => e.products.length == 0 ? console.log('true') : console.log('false'));
     // console.log("Leng.: " + res.length);
 
-    const _modal = async (e, id) => {
+    async _modal(e, id) {
         console.log("ElemID: " + id);
         //https://sweetalert2.github.io/#input-types
         const options = new Map();
 
-        clients.forEach((elem) => options.set(elem, elem));
+        this.state.clients.forEach((elem) => options.set(elem, elem));
 
         let optString = '';
-        clients.forEach((elem, index) => optString +=
-            '<input id="' + elem + '" type="checkbox" value="' + elem + '" class="swal-input' + elem + '"> <label for="' + elem + '">' + clientsName[index] + '</label><br /> '
+        this.state.clients.forEach((elem, index) => optString +=
+            '<input id="' + elem + '" type="checkbox" value="' + elem + '" class="swal-input' + elem + '"> <label for="' + elem + '">' + this.state.clientsName[index] + '</label><br /> '
         )
         console.log("OPT" + optString)
 
@@ -101,7 +104,7 @@ export default function GetPortifolios() {
 
         //Multiple checkboxes: https://stackoverflow.com/questions/55386918/sweet-alert-2-multiple-checkbox
 
-        const { value: opt } = await MySwal.fire({
+        const { value: opt } = await this.state.MySwal.fire({
             title: 'Recomende para: ',
             html: optString,
             confirmButtonColor: "#212121",
@@ -112,7 +115,7 @@ export default function GetPortifolios() {
             preConfirm: () => {
                 let result = []
                 //Fazer a verificação pq tá voltando todos
-                clients.forEach((elem) => {
+                this.state.clients.forEach((elem) => {
                     if (document.getElementById(elem).checked) {
                         result.push(parseInt(document.getElementById(elem).value))
                     }
@@ -123,8 +126,6 @@ export default function GetPortifolios() {
         })
 
         if (opt) {
-            // MySwal.fire({ html: `You selected: ${opt}` })
-            // MySwal.fire(JSON.stringify(opt))
             var data = JSON.stringify({
                 "portfolio_id": id,
                 "client_ids": opt
@@ -142,20 +143,19 @@ export default function GetPortifolios() {
             axios(config)
                 .then(function (response) {
                     if (response.data == "Success") {
-                        MySwal.fire("Sucesso");
+                        this.state.MySwal.fire("Sucesso");
                     } else {
-                        MySwal.fire(JSON.stringify(response.data));
+                        this.state.MySwal.fire(JSON.stringify(response.data));
                     }
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
-
         }
     }
 
-    const _modal2 = async (e, id) => {
-        const { value: formValues } = await MySwal.fire({
+    async _modal2(e, id) {
+        const { value: formValues } = await this.state.MySwal.fire({
             title: 'Período',
             html:
                 'Data inicial:' +
@@ -181,14 +181,15 @@ export default function GetPortifolios() {
         }
     }
 
-    const _modal3 = async (e, id) => {
+    async _modal3(e, id) {
+        const self = this
         // console.log(companies);
         const options = new Map();
 
         // var sortCompanies = companies.sort();
-        companies.sort().forEach((elem) => options.set(elem, elem));
+        self.state.companies.sort().forEach((elem) => options.set(elem, elem));
 
-        const { value: company } = await MySwal.fire({
+        const { value: company } = await self.state.MySwal.fire({
             title: 'Selecione uma empresa',
             input: 'select',
             inputOptions: options,
@@ -198,77 +199,119 @@ export default function GetPortifolios() {
         })
 
         if (company) {
-            MySwal.fire(`You selected: ${company}`)
+            // MySwal.fire(`You selected: ${company}`)
+            var data = JSON.stringify({
+                "symbols": [
+                    company
+                ]
+            });
+
+            var config = {
+                method: 'post',
+                url: 'http://localhost:5003/assets/info',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            };
+
+            let _hs = [];
+            let _dt = [];
+            axios(config)
+                .then(async function (response) {
+                    console.log(response.data[0])
+                    response.data[0].historic.forEach((e) => _hs.push(e.close.toFixed(2)))
+                    response.data[0].historic.forEach((e) => _dt.push(e.date))
+                    self.setState({ info: response.data[0].info })
+                    self.setState({ values: _hs })
+                    self.setState({ dates: _dt })
+                    // console.log("HS len: " + _hs.length + "\nDT len: " + _dt.length)
+                    // console.log("V len: " + self.state.values.length + "\nD len: " + self.state.dates.length)
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+            var htmlStr = '<Link to={{pathname: "../assets/home", state: { pf_id: parseInt(' + id + '), company: ' + company + ', info: ' + self.state.info + ', dates: ' + self.state.dates + ', closes: ' + self.state.values + ' }}} > ' +
+                '<Button secondary>Ok</Button>' +
+                '</Link>'
+
+            self.state.MySwal.fire({
+                title: `Empresa escolhida: ${company}\n${toString(company)}`,
+                showConfirmButton: false,
+                html: htmlStr
+            })
         }
     }
 
-    return (
-        // if(res.length > 0) {console.log(res.length)}
-        <>
-            {res.map((e) =>
-                <Row className="card">
-                    <a href="">
-                        <Col className="space-between">
-                            <div> <BsPersonFill size={40} />   </div>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <div className="card-text" style={{ maxWidth: "20vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}> <b>{e.name.toUpperCase()}</b><br /> <b>Ativos:</b> {e.products.length == 0 ? 'Nenhum ativo' : e.products.map((i) => i.id + " | ")}</div>
-                            <div className="card-icons-but">
-                                {/* BOTÃO RECOMENDAR */}
-                                <div>
-                                    <Button
-                                        className="white"
-                                        style={{ backgroundColor: "transparent", margin: "none", borderColor: "transparent" }}
-                                        onClick={
-                                            (elem) => {
-                                                _modal(elem, e.id);
-                                                elem.preventDefault();
+    render() {
+        return (
+            <>
+                {
+                    this.state.res.map((e) =>
+                        <Row className="card">
+                            <a href="">
+                                <Col className="space-between">
+                                    <div> <BsPersonFill size={40} />   </div>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div className="card-text" style={{ maxWidth: "20vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}> <b>{e.name.toUpperCase()}</b><br /> <b>Ativos:</b> {e.products.length == 0 ? 'Nenhum ativo' : e.products.map((i) => i.id + " | ")}</div>
+                                    <div className="card-icons-but">
+                                        {/* BOTÃO RECOMENDAR */}
+                                        <div>
+                                            <Button
+                                                className="white"
+                                                style={{ backgroundColor: "transparent", margin: "none", borderColor: "transparent" }}
+                                                onClick={
+                                                    (elem) => {
+                                                        this._modal(elem, e.id);
+                                                        elem.preventDefault();
+                                                    }
+                                                }>
+                                                <BsPatchPlusFill size={30} color="black" />
+                                                <p style={{ color: "black", margin: "0" }}>Recomendar</p>
+
+                                            </Button>
+                                        </div>
+                                        &nbsp;&nbsp;
+                                        {/* BOTÃO BACKTEST */}
+                                        <Button
+                                            className="white"
+                                            style={{ backgroundColor: "transparent", margin: "none", borderColor: "transparent" }}
+                                            onClick={
+                                                (elem) => {
+                                                    this._modal2(elem, e.id);
+                                                    elem.preventDefault();
+                                                }
+                                            }>
+                                            <BsBarChartFill size={30} color="black" />
+                                            <p style={{ color: "black", margin: "0" }}>Backtest</p>
+                                        </Button>
+                                        {/* BOTÃO ADICIONAR ATIVOS */}
+                                        &nbsp;&nbsp;
+                                        {/* <Link to={{
+                                        pathname: "../assets/home",
+                                        state: { pf_id: parseInt(e.id) }
+                                    }} > */}
+                                        <Button
+                                            className="white"
+                                            style={{ backgroundColor: "transparent", borderColor: "transparent" }}
+                                            onClick={
+                                                (elem) => {
+                                                    this._modal3(elem, e.id);
+                                                    elem.preventDefault();
+                                                }
                                             }
-                                        }>
-                                        <BsPatchPlusFill size={30} color="black" />
-                                        <p style={{ color: "black", margin: "0" }}>Recomendar</p>
-
-                                    </Button>
-                                </div>
-                                &nbsp;&nbsp;
-                                {/* BOTÃO BACKTEST */}
-                                <Button
-                                    className="white"
-                                    style={{ backgroundColor: "transparent", margin: "none", borderColor: "transparent" }}
-                                    onClick={
-                                        (elem) => {
-                                            _modal2(elem, e.id);
-                                            elem.preventDefault();
-                                        }
-                                    }>
-                                    <BsBarChartFill size={30} color="black" />
-                                    <p style={{ color: "black", margin: "0" }}>Backtest</p>
-                                </Button>
-                                {/* BOTÃO ADICIONAR ATIVOS */}
-                                &nbsp;&nbsp;
-                                {/* <Link to={{
-                                    pathname: "../assets/home",
-                                    state: { pf_id: parseInt(e.id) }
-                                }} > */}
-                                <Button
-                                    className="white"
-                                    style={{ backgroundColor: "transparent", borderColor: "transparent" }}
-                                    onClick={
-                                        (elem) => {
-                                            _modal3(elem, e.id);
-                                            elem.preventDefault();
-                                        }
-                                    }>
-                                    <BsBagPlusFill size={30} color="black" />
-                                    <p style={{ color: "black", margin: "0", wordBreak: "keep-all", whiteSpace: "nowrap" }}>Adicionar Ativos</p>
-                                </Button>
-                                {/* </Link> */}
-                            </div>
-                        </Col>
-                    </a>
-                </Row>
-            )
-            }
-        </>
-    );
-
+                                        >
+                                            <BsBagPlusFill size={30} color="black" />
+                                            <p style={{ color: "black", margin: "0", wordBreak: "keep-all", whiteSpace: "nowrap" }}>Adicionar Ativos</p>
+                                        </Button>
+                                        {/* </Link> */}
+                                    </div>
+                                </Col>
+                            </a>
+                        </Row>
+                    )
+                }
+            </>
+        );
+    }
 }

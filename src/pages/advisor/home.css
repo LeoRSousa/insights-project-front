@@ -90,7 +90,7 @@ rgba(33,33,33,255) */
 }
 
 .space-between>div:nth-child(3) {
-    margin-left: 40vw;
+    margin-left: 27vw; /* 40vw para telas maiores  */
     position: absolute;
     align-self: center;
 }
