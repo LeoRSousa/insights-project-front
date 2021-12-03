@@ -32,7 +32,7 @@ function handleSubmit(am, p, c, pf) {
         .then(function (response) {
             console.log(response)
             alert('Ativo adicionado!');
-            window.location.reload();
+            window.location.replace('http://localhost:5500/portifolio/home');
         })
         .catch(function (error) {
             alert(error);
