@@ -217,8 +217,9 @@ export default class GetPortifolios extends React.Component {
 
             let _hs = [];
             let _dt = [];
-            axios(config)
+            await axios(config)
                 .then(async function (response) {
+                    console.log("AXIOS")
                     console.log(response.data[0])
                     response.data[0].historic.forEach((e) => _hs.push(e.close.toFixed(2)))
                     response.data[0].historic.forEach((e) => _dt.push(e.date))
@@ -231,14 +232,23 @@ export default class GetPortifolios extends React.Component {
                     console.log(error);
                 });
 
-            var htmlStr = '<Link to={{pathname: "../assets/home", state: { pf_id: parseInt(' + id + '), company: ' + company + ', info: ' + self.state.info + ', dates: ' + self.state.dates + ', closes: ' + self.state.values + ' }}} > ' +
+            //As coisas aqui em baixo serão executadas antes da requisição, por isso vai vazio
+            console.log("FORA AXIOS")
+            var htmlStr = ''
+            htmlStr += '<Link to={{pathname: "../assets/home", state: { pf_id: parseInt(' + id + '), company: ' + company + ', info: ' + self.state.info + ', dates: ' + self.state.dates + ', closes: ' + self.state.values + ' }}} > ' +
                 '<Button secondary>Ok</Button>' +
                 '</Link>'
 
+            //Sugestões de pesquisa pra navegaçãoa funcionar:
+            //https://stackoverflow.com/questions/29244731/react-router-how-to-manually-invoke-link
+            //react-router-dom inside javascript function
+            //react-router-dom inside sweetalert
+            console.log(htmlStr)
             self.state.MySwal.fire({
-                title: `Empresa escolhida: ${company}\n${toString(company)}`,
+                title: `Empresa escolhida: ${company}\n`,
                 showConfirmButton: false,
-                html: htmlStr
+                html: htmlStr,
+                onClick: ,
             })
         }
     }
