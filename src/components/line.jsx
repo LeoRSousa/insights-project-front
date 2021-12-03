@@ -95,6 +95,15 @@ const options = {
 
 const LineChart = ({ closes, dates, infos, company, portifolio }) => {
 
+    console.log(
+        '___________________________CHART_____________________________\n'
+        + 'Closes: ' + closes + '\n'
+        + 'Dates: ' + dates + '\n'
+        + 'Company: ' + company[0] + '\n'
+        + 'Portif: ' + portifolio + '\n' 
+        + '___________________________CHART_____________________________'
+    )
+
     const data = buildData(closes, dates);
     const [amounts, setAmounts] = useState(1.0);
     const [propt, setPropt] = useState(1.0);

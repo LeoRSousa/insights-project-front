@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import "../pages/advisor/home.css";
 
 import axios from "axios";
-import { Route, Link, Switch } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { Row, Col, Button, Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import { BsPersonFill, BsBagPlusFill, BsBarChartFill, BsPatchPlusFill } from "react-icons/bs";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 
-export default class GetPortifolios extends React.Component {
+class GetPortifolios extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -199,7 +199,6 @@ export default class GetPortifolios extends React.Component {
         })
 
         if (company) {
-            // MySwal.fire(`You selected: ${company}`)
             var data = JSON.stringify({
                 "symbols": [
                     company
@@ -219,7 +218,6 @@ export default class GetPortifolios extends React.Component {
             let _dt = [];
             await axios(config)
                 .then(async function (response) {
-                    console.log("AXIOS")
                     console.log(response.data[0])
                     response.data[0].historic.forEach((e) => _hs.push(e.close.toFixed(2)))
                     response.data[0].historic.forEach((e) => _dt.push(e.date))
@@ -232,28 +230,24 @@ export default class GetPortifolios extends React.Component {
                     console.log(error);
                 });
 
-            //As coisas aqui em baixo serão executadas antes da requisição, por isso vai vazio
-            console.log("FORA AXIOS")
-            var htmlStr = ''
-            htmlStr += '<Link to={{pathname: "../assets/home", state: { pf_id: parseInt(' + id + '), company: ' + company + ', info: ' + self.state.info + ', dates: [' + self.state.dates + '], closes: [' + self.state.values + '] }}} > ' +
-                '<Button secondary>Ok</Button>' +
-                '</Link>'
-
-            //Sugestões de pesquisa pra navegaçãoa funcionar:
-            //https://stackoverflow.com/questions/29244731/react-router-how-to-manually-invoke-link
-            //react-router-dom inside javascript function
+            
             //react-router-dom inside sweetalert
             //https://qastack.com.br/programming/44121069/how-to-pass-params-with-history-push-link-redirect-in-react-router-v4
-            console.log(htmlStr)
-            self.state.MySwal.fire({
-                title: `Empresa escolhida: ${company}\n`,
-                showConfirmButton: false,
-                html: htmlStr,
-                // onClick: self.props.history.push(
-                    // pathname: '../assets/home',
-                    // state: { pf_id: parseInt(id), company: company, info: self.state.info, dates: self.state.dates, closes: self.state.values }
-                //),
+            
+            self.props.history.push({
+                pathname: '/assets/home',
+                state: { pf_id: parseInt(id), company: company, info: self.state.info, dates: self.state.dates, closes: self.state.values }
             })
+            
+            // self.state.MySwal.fire({
+            //     title: `Empresa escolhida: ${company}\n`,
+            //     showConfirmButton: true,
+            //     // html: htmlStr,
+            //     onClick: self.props.history.push({
+            //         pathname: '/assets/home',
+            //         state: { pf_id: parseInt(id), company: company, info: self.state.info, dates: self.state.dates, closes: self.state.values }
+            //     }),
+            // })
         }
     }
 
@@ -329,3 +323,5 @@ export default class GetPortifolios extends React.Component {
         );
     }
 }
+
+export default withRouter(GetPortifolios);

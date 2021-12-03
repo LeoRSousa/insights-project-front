@@ -29,14 +29,14 @@ class AssetsHome extends React.Component {
         this.setState({ selected: value });
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         var self = this;
-        this.setState({
-            pf_id: parseInt(this.props.location.state.pf_id),
-            company: this.props.location.state.company,
-            info: this.props.location.state.info,
-            dates: this.props.location.state.data,
-            closes: this.props.location.state.closes,
+        await self.setState({
+            pf_id: parseInt(self.props.location.state.pf_id),
+            company: self.props.location.state.company,
+            info: self.props.location.state.info,
+            dates: self.props.location.state.dates,
+            closes: self.props.location.state.closes,
         })
 
         //Request dos dados do card do advisor
