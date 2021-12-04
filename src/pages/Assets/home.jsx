@@ -121,7 +121,7 @@ class AssetsHome extends React.Component {
 
                 <div className="Rectangle-1">
                     <div className='title'>
-                        <h1>Assets</h1>
+                        <h1>Ativo</h1>
                     </div>
                     <div>
                         {/* <Row>
@@ -141,8 +141,10 @@ class AssetsHome extends React.Component {
                             </Dropdown>
                         </Row> */}
                     </div>
+                    <div style={{marginTop: "10vh"}}>
 
-                    <LineChart closes={this.state.closes} dates={this.state.dates} infos={this.state.info} company={this.state.company} portifolio={this.state.pf_id}/>
+                        <LineChart closes={this.state.closes} dates={this.state.dates} infos={this.state.info} company={this.state.company} portifolio={this.state.pf_id} />
+                    </div>
 
                 </div>
             </>

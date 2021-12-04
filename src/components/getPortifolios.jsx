@@ -189,16 +189,29 @@ class GetPortifolios extends React.Component {
         // var sortCompanies = companies.sort();
         self.state.companies.sort().forEach((elem) => options.set(elem, elem));
 
+        //String para formar o html dos valores de input
+        let optString = '<datalist id="myList">'
+        self.state.companies.sort().forEach((elem) => optString +=
+            // '<input id="' + elem + '" type="checkbox" value="' + elem + '" class="swal-input' + elem + '"> <label for="' + elem + '">' + this.state.clientsName[index] + '</label><br /> '
+            '<option value="' + elem +'" />'
+        );
+        optString += '</datalist>'
+
         const { value: company } = await self.state.MySwal.fire({
             title: 'Selecione uma empresa',
-            input: 'select',
-            inputOptions: options,
+            html: optString,
+            input: 'text',
+            inputAttributes: {
+                list: 'myList'
+            },
+            // inputOptions: options,
             inputPlaceholder: 'Empresas',
             showCancelButton: true,
             confirmButtonColor: "#212121",
         })
 
         if (company) {
+            console.log("\nRESULT: " + company)
             var data = JSON.stringify({
                 "symbols": [
                     company
