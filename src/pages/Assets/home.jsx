@@ -31,7 +31,7 @@ class AssetsHome extends React.Component {
 
     async componentDidMount() {
         var self = this;
-        await self.setState({
+        self.setState({
             pf_id: parseInt(self.props.location.state.pf_id),
             company: self.props.location.state.company,
             info: self.props.location.state.info,

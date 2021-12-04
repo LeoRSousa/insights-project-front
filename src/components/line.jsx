@@ -30,8 +30,8 @@ function handleSubmit(am, p, c, pf) {
 
     axios(config)
         .then(function (response) {
-            console.log(response)
-            alert('Ativo adicionado!');
+            // console.log("Assets");
+            alert('Ativo adicionado!\n');
             window.location.replace('http://localhost:5500/portifolio/home');
         })
         .catch(function (error) {
@@ -99,7 +99,7 @@ const LineChart = ({ closes, dates, infos, company, portifolio }) => {
         '___________________________CHART_____________________________\n'
         + 'Closes: ' + closes + '\n'
         + 'Dates: ' + dates + '\n'
-        + 'Company: ' + company[0] + '\n'
+        + 'Company: ' + company + '\n'
         + 'Portif: ' + portifolio + '\n' 
         + '___________________________CHART_____________________________'
     )
@@ -127,7 +127,7 @@ const LineChart = ({ closes, dates, infos, company, portifolio }) => {
                     </Col>
                 </Row>
                 <Col sm={8} className='card-input-field'>
-                    <Form onSubmit={(e) => handleSubmit(amounts, propt, company[0], portifolio)}>
+                    <Form onSubmit={(e) => handleSubmit(amounts, propt, company, portifolio)}>
                         <FormGroup row>
                             <Label
                                 for="amounts"
