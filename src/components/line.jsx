@@ -30,9 +30,14 @@ function handleSubmit(am, p, c, pf) {
 
     axios(config)
         .then(function (response) {
-            // console.log("Assets");
-            alert('Ativo adicionado!\n');
-            window.location.replace('http://localhost:5500/portifolio/home');
+            console.log("Assets " + response.data);
+            if(response.data == "Products Added") {
+                alert('Ativo adicionado!\n');
+                window.location.replace('http://localhost:5500/portifolio/home');
+            } else {
+                alert('Algo inesperado ocorreu!\n Redirecionando...')
+                window.location.replace('http://localhost:5500/portifolio/home');
+            }
         })
         .catch(function (error) {
             alert(error);

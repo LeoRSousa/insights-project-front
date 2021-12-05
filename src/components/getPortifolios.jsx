@@ -193,7 +193,7 @@ class GetPortifolios extends React.Component {
         let optString = '<datalist id="myList">'
         self.state.companies.sort().forEach((elem) => optString +=
             // '<input id="' + elem + '" type="checkbox" value="' + elem + '" class="swal-input' + elem + '"> <label for="' + elem + '">' + this.state.clientsName[index] + '</label><br /> '
-            '<option value="' + elem +'" />'
+            '<option value="' + elem + '" />'
         );
         optString += '</datalist>'
 
@@ -213,7 +213,7 @@ class GetPortifolios extends React.Component {
         if (company) {
             var cp = company;
             console.log("\nRESULT: " + company)
-            
+
             var data = JSON.stringify({
                 "symbols": [
                     company
@@ -245,15 +245,15 @@ class GetPortifolios extends React.Component {
                     console.log(error);
                 });
 
-            
+
             // //react-router-dom inside sweetalert
             // //https://qastack.com.br/programming/44121069/how-to-pass-params-with-history-push-link-redirect-in-react-router-v4
-            
+
             self.props.history.push({
                 pathname: '/assets/home',
-                state: { pf_id: parseInt(id), company: cp, info: self.state.info, dates: self.state.dates, closes: self.state.values }
+                state: { pf_id: id, company: cp, info: self.state.info, dates: self.state.dates, closes: self.state.values }
             })
-            
+
             // self.state.MySwal.fire({
             //     title: `Empresa escolhida: ${company}\n`,
             //     showConfirmButton: true,
