@@ -6,17 +6,17 @@ import { Line } from 'react-chartjs-2';
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import axios from 'axios';
 
-function handleSubmit(am, p, c, pf) {
-    console.log('{"id": "' + c + '", "proportion": ' + p + ', "amount": ' + am + '}');
+async function handleSubmit(event, am, p, c, pf) {
+    console.log('"portfolio_id": ' + pf + '{,"id": "' + c + '", "proportion": ' + p + ', "amount": ' + am + '}');
     var res = JSON.stringify({
         "portfolio_id": pf,
         "products": [
             {
-              "id": c,
-              "proportion": (p/100),
-              "amount": parseFloat(am)
+                "id": c,
+                "proportion": (p / 100),
+                "amount": parseFloat(am)
             }
-          ]
+        ]
     });
     console.log("RES " + res);
     var config = {
@@ -31,7 +31,7 @@ function handleSubmit(am, p, c, pf) {
     axios(config)
         .then(function (response) {
             console.log("Assets " + response.data);
-            if(response.data == "Products Added") {
+            if (response.data == "Products Added") {
                 alert('Ativo adicionado!\n');
                 window.location.replace('http://localhost:5500/portifolio/home');
             } else {
@@ -43,6 +43,7 @@ function handleSubmit(am, p, c, pf) {
             alert(error);
         });
 
+    event.preventDefault();
     // return 'a';
 }
 
@@ -105,7 +106,7 @@ const LineChart = ({ closes, dates, infos, company, portifolio }) => {
         + 'Closes: ' + closes + '\n'
         + 'Dates: ' + dates + '\n'
         + 'Company: ' + company + '\n'
-        + 'Portif: ' + portifolio + '\n' 
+        + 'Portif: ' + portifolio + '\n'
         + '___________________________CHART_____________________________'
     )
 
@@ -132,7 +133,7 @@ const LineChart = ({ closes, dates, infos, company, portifolio }) => {
                     </Col>
                 </Row>
                 <Col sm={8} className='card-input-field'>
-                    <Form onSubmit={(e) => handleSubmit(amounts, propt, company, portifolio)}>
+                    <Form onSubmit={(e) => handleSubmit(e, amounts, propt, company, portifolio)}>
                         <FormGroup row>
                             <Label
                                 for="amounts"

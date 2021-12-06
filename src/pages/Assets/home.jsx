@@ -17,7 +17,7 @@ class AssetsHome extends React.Component {
             open: false,
             selected: 'Selecione',
             adv: '',
-            pf_id: 0,
+            pfId: 0,
             company: '',
             info: {},
             dates: [],
@@ -31,13 +31,17 @@ class AssetsHome extends React.Component {
 
     async componentDidMount() {
         var self = this;
-        self.setState({
-            pf_id: self.props.location.state.pf_id,
-            company: self.props.location.state.company,
-            info: self.props.location.state.info,
-            dates: self.props.location.state.dates,
-            closes: self.props.location.state.closes,
-        })
+        try {
+            self.setState({
+                pfId: self.props.location.state.pf_id,
+                company: self.props.location.state.company,
+                info: self.props.location.state.info,
+                dates: self.props.location.state.dates,
+                closes: self.props.location.state.closes,
+            })
+        } catch(error) {
+            console.error();
+        }
 
         //Request dos dados do card do advisor
         var config2 = {
@@ -143,7 +147,7 @@ class AssetsHome extends React.Component {
                     </div>
                     <div style={{marginTop: "10vh"}}>
 
-                        <LineChart closes={this.state.closes} dates={this.state.dates} infos={this.state.info} company={this.state.company} portifolio={this.state.pf_id} />
+                        <LineChart closes={this.state.closes} dates={this.state.dates} infos={this.state.info} company={this.state.company} portifolio={this.state.pfId} />
                     </div>
 
                 </div>
