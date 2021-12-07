@@ -295,7 +295,7 @@ class GetPortifolios extends React.Component {
                                 <div className="space-between">
                                     <span style={{display: "flex", marginTop: "7px", justifyContent: "center"}}> <BsPersonFill size={40}/>   </span>
                                     <span className="card-text" style={{ maxWidth: "28vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}> <b>{e.name.toUpperCase()}</b><br /> <b>Ativos:</b> {e.products.length == 0 ? 'Nenhum ativo' : e.products.map((i) => i.id + " | ")}</span>
-                                    <span className="card-icons-but" style={{ maxWidth: "25vw", whiteSpace: "nowrap", overflow: "auto", textOverflow: "ellipsis" }}>
+                                    <span className="card-icons-but" style={{ maxWidth: "25vw", whiteSpace: "nowrap", overflow: "auto", textOverflow: "ellipsis", justifyContent: "end" }}>
                                         {/* BOTÃO RECOMENDAR */}
                                         <div>
                                             <Button
