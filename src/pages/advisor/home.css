@@ -87,26 +87,16 @@ rgba(33,33,33,255) */
     flex-direction: row;
     color: black;
     background-color: transparent;
-}
-
-.space-between>div:nth-child(3) {
-    margin-left: 60%;
-    /* 40vw para telas maiores  */
-    position: absolute;
-    align-self: center;
-}
-
-.space-between>div:nth-child(4) {
-    margin-left: 80%;
-    position: absolute;
-    align-self: center;
+    margin-bottom: 3px;
 }
 
 .space-between {
     text-align: left;
     align-self: flex-start;
-    margin-top: 2vh;
-    display: flex;
+    margin-top: 1.5vh;
+    display: grid;
+    grid-template-columns: 4vw 30vw 26vw;
+    /*Colunas(3): UserIcon, Text, Icons*/
 }
 
 a:link {
@@ -134,7 +124,7 @@ a:visited {
 }
 
 .card-text {
-    line-height: 1.2;
+    line-height: 1.6;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -152,4 +142,11 @@ a:visited {
 
 .main-form {
     text-align: right;
+}
+
+*,
+ ::after,
+ ::before {
+    box-sizing: border-box;
+    align-content: center;
 }

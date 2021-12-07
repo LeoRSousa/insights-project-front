@@ -20,21 +20,21 @@ class GetClient extends React.Component {
 
     deleteItem(elem) {
         const self = this;
-        if(window.confirm('Tem certeza que deseja deletar o usuário?')) {
+        if (window.confirm('Tem certeza que deseja deletar o usuário?')) {
             console.log(elem);
             var config = {
                 method: 'get',
                 url: 'http://localhost:5001/client/delete/' + elem,
                 headers: {}
             };
-    
+
             axios(config)
-                .then(function (response) { 
-                    self.setState({ delRes: JSON.stringify(response) }); 
-                }) 
+                .then(function (response) {
+                    self.setState({ delRes: JSON.stringify(response) });
+                })
                 .catch(function (error) { self.setState({ delRes: error }); });
-                
-                if(this.state.delRes == '1') {
+
+            if (this.state.delRes == '1') {
                 alert('Usuário deletado!');
                 window.location.replace('http://localhost:5500/advisor/home');
             }
@@ -58,17 +58,17 @@ class GetClient extends React.Component {
     }
 
     //e.advisor_id == window.sessionStorage.getItem('adv_id')
-    
+
     render() {
         let count = 0;
-        this.state.res.map((e) => { 
-            if(e.advisor_id == window.sessionStorage.getItem('adv_id')) count = count + 1
+        this.state.res.map((e) => {
+            if (e.advisor_id == window.sessionStorage.getItem('adv_id')) count = count + 1
         })
         return (
             <>
                 {
                     count === 0
-                        ? <div style={{color: "white"}}> 
+                        ? <div style={{ color: "white" }}>
                             <h2>Nada por aqui!</h2>
                             <a href="../client/create">Adicionar cliente?...</a>
                         </div>
@@ -78,20 +78,15 @@ class GetClient extends React.Component {
                                     <a href="">
                                         <Col className="space-between">
                                             <div> <BsPersonFill size={40} />   </div>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <div className="card-text"> <b>{e.name.toUpperCase()}</b> <br /> {e.email} </div>
-                                            <span></span>
-                                            <div>
+                                            <div className="card-text" style={{ maxWidth: "28vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}> <b>{e.name.toUpperCase()}</b> <br /> {e.email} </div>
+                                            <div className="card-icons-but" style={{ maxWidth: "25vw", whiteSpace: "nowrap", overflow: "auto", textOverflow: "ellipsis" }}>
                                                 <Button className="white" onClick={() => this.deleteItem(e.id)}><BsFillTrashFill size={30} color="black" /></Button>
-                                                {/* BsThreeDotsVertical */}
-                                                &nbsp;&nbsp;
                                                 <Link to={{
                                                     pathname: "../client/update",
                                                     state: { id: e.id }
                                                 }} >
-                                                <Button className="white"><BsPencilFill size={30} color="black" />
-                                                </Button>
-                                            </Link>
+                                                    <Button className="white"><BsPencilFill size={30} color="black" /></Button>
+                                                </Link>
                                             </div>
                                         </Col>
                                     </a>

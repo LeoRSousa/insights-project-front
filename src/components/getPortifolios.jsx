@@ -160,7 +160,7 @@ class GetPortifolios extends React.Component {
             html:
                 'Data inicial:' +
                 '<input type="date" id="swal-input1" class="swal2-input">' +
-                'Data final:' + '<input type="date" id="swal-input2" class="swal2-input">',
+                '<br> Data final:' + '<input type="date" id="swal-input2" class="swal2-input">',
             focusConfirm: false,
             showCancelButton: true,
             confirmButtonColor: "#212121",
@@ -292,11 +292,10 @@ class GetPortifolios extends React.Component {
                     this.state.res.map((e) =>
                         <Row className="card">
                             <a href="">
-                                <Col className="space-between">
-                                    <div> <BsPersonFill size={40} />   </div>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <div className="card-text" style={{ maxWidth: "20vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}> <b>{e.name.toUpperCase()}</b><br /> <b>Ativos:</b> {e.products.length == 0 ? 'Nenhum ativo' : e.products.map((i) => i.id + " | ")}</div>
-                                    <div className="card-icons-but">
+                                <div className="space-between">
+                                    <span style={{display: "flex", marginTop: "7px", justifyContent: "center"}}> <BsPersonFill size={40}/>   </span>
+                                    <span className="card-text" style={{ maxWidth: "28vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}> <b>{e.name.toUpperCase()}</b><br /> <b>Ativos:</b> {e.products.length == 0 ? 'Nenhum ativo' : e.products.map((i) => i.id + " | ")}</span>
+                                    <span className="card-icons-but" style={{ maxWidth: "25vw", whiteSpace: "nowrap", overflow: "auto", textOverflow: "ellipsis" }}>
                                         {/* BOTÃO RECOMENDAR */}
                                         <div>
                                             <Button
@@ -313,7 +312,6 @@ class GetPortifolios extends React.Component {
 
                                             </Button>
                                         </div>
-                                        &nbsp;&nbsp;
                                         {/* BOTÃO BACKTEST */}
                                         <Button
                                             className="white"
@@ -328,7 +326,6 @@ class GetPortifolios extends React.Component {
                                             <p style={{ color: "black", margin: "0" }}>Backtest</p>
                                         </Button>
                                         {/* BOTÃO ADICIONAR ATIVOS */}
-                                        &nbsp;&nbsp;
                                         {/* <Link to={{
                                         pathname: "../assets/home",
                                         state: { pf_id: parseInt(e.id) }
@@ -361,8 +358,8 @@ class GetPortifolios extends React.Component {
                                         </Button>
                                         
                                         {/* </Link> */}
-                                    </div>
-                                </Col>
+                                    </span>
+                                </div>
                                 
                             </a>
                         </Row>
