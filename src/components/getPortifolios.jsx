@@ -5,7 +5,7 @@ import "../pages/advisor/home.css";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { Row, Col, Button, Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
-import { BsPersonFill, BsBagPlusFill, BsBarChartFill, BsPatchPlusFill } from "react-icons/bs";
+import { BsPersonFill, BsBagPlusFill, BsBarChartFill, BsPatchPlusFill, BsFillTrashFill } from "react-icons/bs";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -266,6 +266,25 @@ class GetPortifolios extends React.Component {
         }
     }
 
+    delete(id) {
+        var config = {
+            method: 'get',
+            url: 'http://localhost:5004/portfolio/delete/' + id,
+            headers: { }
+          };
+          
+          axios(config)
+          .then(function (response) {
+              if(response.data == 1) {
+                  alert("Apagado!");
+              }
+            // console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
     render() {
         return (
             <>
@@ -327,9 +346,24 @@ class GetPortifolios extends React.Component {
                                             <BsBagPlusFill size={30} color="black" />
                                             <p style={{ color: "black", margin: "0", wordBreak: "keep-all", whiteSpace: "nowrap" }}>Adicionar Ativos</p>
                                         </Button>
+                                        <Button
+                                            className="white"
+                                            style={{ backgroundColor: "transparent", borderColor: "transparent" }}
+                                            onClick={
+                                                (elem) => {
+                                                    this.delete(e.id);
+                                                    elem.preventDefault();
+                                                }
+                                            }
+                                        >
+                                            <BsFillTrashFill size={30} color="red" />
+                                            <p style={{ color: "black", margin: "0", wordBreak: "keep-all", whiteSpace: "nowrap" }}>Apagar</p>
+                                        </Button>
+                                        
                                         {/* </Link> */}
                                     </div>
                                 </Col>
+                                
                             </a>
                         </Row>
                     )
