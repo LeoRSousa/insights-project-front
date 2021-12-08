@@ -83,19 +83,21 @@ rgba(33,33,33,255) */
 }
 
 .card-icons-but {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* flex-direction: row; */
     color: black;
     background-color: transparent;
     margin-bottom: 3px;
+    grid-column-start: 3;
 }
 
 .space-between {
     text-align: left;
-    align-self: flex-start;
+    /* align-self: flex-start; */
     margin-top: 1.5vh;
     display: grid;
-    grid-template-columns: 4vw 30vw 26vw;
+    grid-template-columns: 4% 50% 48%;
     /*Colunas(3): UserIcon, Text, Icons*/
 }
 
