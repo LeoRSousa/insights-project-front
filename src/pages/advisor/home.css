@@ -92,6 +92,17 @@ rgba(33,33,33,255) */
     grid-column-start: 3;
 }
 
+.card-icons-but-cli {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-self: end;
+    color: black;
+    background-color: transparent;
+    margin-bottom: 3px;
+    margin-right: 1.3vw;
+    grid-column-end: 4;
+}
+
 .space-between {
     text-align: left;
     /* align-self: flex-start; */

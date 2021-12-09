@@ -79,7 +79,7 @@ class GetClient extends React.Component {
                                         <Col className="space-between">
                                             <div> <BsPersonFill size={40} />   </div>
                                             <div className="card-text" style={{ maxWidth: "28vw", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}> <b>{e.name.toUpperCase()}</b> <br /> {e.email} </div>
-                                            <div className="card-icons-but" style={{ maxWidth: "25vw", whiteSpace: "nowrap", overflow: "auto", textOverflow: "ellipsis", justifyContent: "end" }}>
+                                            <div className="card-icons-but-cli" style={{ whiteSpace: "nowrap", overflow: "auto", textOverflow: "ellipsis", justifyContent: "end" }}>
                                                 <Button className="white" onClick={() => this.deleteItem(e.id)}><BsFillTrashFill size={30} color="black" /></Button>
                                                 <Link to={{
                                                     pathname: "../client/update",
